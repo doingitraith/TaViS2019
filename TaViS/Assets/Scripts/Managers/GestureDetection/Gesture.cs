@@ -33,6 +33,10 @@ public class Gesture : MonoBehaviour
     /// </summary>
     private GestureManager.GESTURENAME name;
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> parent of 50858ad... the real push from 31.5
     /// <summary>
     /// Initializes a new instance of the <see cref="Gesture"/> class.
     /// </summary>

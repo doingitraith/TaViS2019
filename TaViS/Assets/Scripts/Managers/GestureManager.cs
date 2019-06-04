@@ -17,19 +17,31 @@ public class GestureManager : MonoBehaviour
         PULL_LEFT,
         RAISE_ARMS,
         SWIPE_LEG
+<<<<<<< HEAD
+    }
+
+=======
     } 
+>>>>>>> parent of 50858ad... the real push from 31.5
     // Start is called before the first frame update
     void Start()
     {
         gc = GameObject.Find("GestureController").GetComponent<GestureController>();
         miniGameManager = GameObject.Find("MiniGameManager").GetComponent<MiniGameManager>();
+<<<<<<< HEAD
+        currentGame = GameManager.currentGame;
+        gesturesByGame = new Dictionary<GameID.GAME_ID, List<Gesture>>();
+        InitDictionary();
+        LoadGameGestures(currentGame);
+=======
         currentGame = GameID.GAME_ID.START;
 
         initDictionary();
         UpdateGestures(currentGame);
+>>>>>>> parent of 50858ad... the real push from 31.5
     }
 
-    public void UpdateGestures(GameID.GAME_ID newGameID)
+    public void LoadGameGestures(GameID.GAME_ID newGameID)
     {
         currentGame = newGameID;
         gc.GetGestures().Clear();
@@ -93,13 +105,61 @@ public class GestureManager : MonoBehaviour
 
     void TriggerGestureResult(GESTURENAME recognizedGesture)
     {
-        ReturnPointsFromEvaluation(recognizedGesture);
-        miniGameManager.TriggerGestureResult(new GestureEvaluationResult(recognizedGesture, ReturnPointsFromEvaluation(recognizedGesture)));
+        GestureEvaluationResult result = GetPointsFromEvaluation(recognizedGesture);
+        result.score = GetFinalGestureEvaluationResult(GetPointsFromEvaluation(recognizedGesture));
+        miniGameManager.TriggerGestureResult(result);
     }
 
-    GestureEvaluationResult.GESTURE_PERFORMANCE ReturnPointsFromEvaluation(GESTURENAME recognizedGesture)
+    GestureEvaluationResult GetPointsFromEvaluation(GESTURENAME recognizedGesture)
     {
+<<<<<<< HEAD
+        GestureEvaluationResult.GESTURE_PERFORMANCE performance = GestureEvaluationResult.GESTURE_PERFORMANCE.INVALID;
+        if (gesturePauseCount <= scoreThresholdPerfect)
+        {
+            performance = GestureEvaluationResult.GESTURE_PERFORMANCE.PERFECT;
+        }
+        else if (gesturePauseCount <= scoreThresholdVeryGood)
+        {
+            performance = GestureEvaluationResult.GESTURE_PERFORMANCE.VERY_GOOD;
+        }
+        else if (gesturePauseCount <= scoreThresholdGood)
+        {
+            performance = GestureEvaluationResult.GESTURE_PERFORMANCE.GOOD;
+        }
+        else if (gesturePauseCount <= scoreThresholdOk)
+        {
+            performance = GestureEvaluationResult.GESTURE_PERFORMANCE.OK;
+        }
+        else if (gesturePauseCount <= scoreThresholdBad)
+        {
+            performance = GestureEvaluationResult.GESTURE_PERFORMANCE.BAD;
+        }
+        
+        Debug.Log(performance.ToString() + " Score: " + gesturePauseCount);
+        gesturePauseCount = 1;
+        return new GestureEvaluationResult(recognizedGesture, performance);
+    }
+
+    public void IncreasePauseCount()
+    {
+        gesturePauseCount++;
+=======
         //todo evaluation...
         return GestureEvaluationResult.GESTURE_PERFORMANCE.PERFECT;
+>>>>>>> parent of 50858ad... the real push from 31.5
+    }
+
+    int GetFinalGestureEvaluationResult(GestureEvaluationResult result)
+    {
+        int difficultyMod = 1;
+        //set the difficulty of your gestures here!
+        switch (result.gestureName)
+        {
+            case GESTURENAME.RAISE_ARMS: difficultyMod = 2; break;
+            default: break;
+        }
+
+        return difficultyMod * (int)result.performance;
+
     }
 }
