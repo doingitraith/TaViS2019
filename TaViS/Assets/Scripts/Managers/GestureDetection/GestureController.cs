@@ -94,7 +94,7 @@ public class GestureController : MonoBehaviour
         if (this.GestureRecognizedInController != null)
         {
             // fire the second event
-            this.GestureRecognizedInController(this, e);
+            this.GestureRecognizedInController(sender, e);
         }
 
         foreach (Gesture g in this.gestures)

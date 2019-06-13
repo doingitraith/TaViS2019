@@ -1,19 +1,20 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GestureManager : MonoBehaviour
 {
-    private GestureController gc;
-    private MiniGameManager miniGameManager;
-    private GameID.GAME_ID currentGame;
-    private Dictionary<GameID.GAME_ID, List<Gesture>> gesturesByGame;
-
     public int scoreThresholdBad = 1150;
     public int scoreThresholdOk = 950;
     public int scoreThresholdGood = 850;
     public int scoreThresholdVeryGood = 650;
     public int scoreThresholdPerfect = 550;
+
+    private GestureController gc;
+    //private MiniGameManager miniGameManager;
+    private GameID.GAME_ID currentGame;
+    private Dictionary<GameID.GAME_ID, List<Gesture>> gesturesByGame;
 
     private int gesturePauseCount = 0;
 
@@ -31,8 +32,8 @@ public class GestureManager : MonoBehaviour
     void Start()
     {
         gc = GameObject.Find("GestureController").GetComponent<GestureController>();
-        miniGameManager = GameObject.Find("MiniGameManager").GetComponent<MiniGameManager>();
-        currentGame = GameManager.currentGame;
+        //miniGameManager = GameObject.Find("MiniGameManager").GetComponent<MiniGameManager>();
+        currentGame = GameManager.Instance.CurrentGame;
         gesturesByGame = new Dictionary<GameID.GAME_ID, List<Gesture>>();
         InitDictionary();
         LoadGameGestures(currentGame);
@@ -108,7 +109,7 @@ public class GestureManager : MonoBehaviour
     {
         GestureEvaluationResult result = GetPointsFromEvaluation(recognizedGesture);
         result.score = GetFinalGestureEvaluationResult(GetPointsFromEvaluation(recognizedGesture));
-        miniGameManager.TriggerGestureResult(result);
+        GameManager.Instance.MiniGameManager.TriggerGestureResult(result);
     }
 
     GestureEvaluationResult GetPointsFromEvaluation(GESTURENAME recognizedGesture)
