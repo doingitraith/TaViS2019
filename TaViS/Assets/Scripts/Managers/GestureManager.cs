@@ -11,6 +11,8 @@ public class GestureManager : MonoBehaviour
     public int scoreThresholdVeryGood = 650;
     public int scoreThresholdPerfect = 550;
 
+    public float gestureSegmentTolerance = 0.1f;
+
     private GestureController gc;
     //private MiniGameManager miniGameManager;
     private GameID.GAME_ID currentGame;
@@ -157,6 +159,5 @@ public class GestureManager : MonoBehaviour
         }
 
         return difficultyMod * (int)result.performance;
-
     }
 }

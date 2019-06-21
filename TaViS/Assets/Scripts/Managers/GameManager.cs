@@ -5,8 +5,13 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+    public CameraUtils CameraUtils;
+    public MiniGameManager MiniGameManager;
+    public GestureManager GestureManager;
+    public GameID.GAME_ID CurrentGame { get; set; }
+    public bool isRightHanded = false; // ;)
 
-    private void Awake()
+    void Awake()
     {
         if (Instance != null && Instance != this)
         {
@@ -18,22 +23,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private CameraUtils cameraUtils;
-    private MiniGameManager miniGameManager;
-    private GestureManager gestureManager;
-
-    public GameID.GAME_ID CurrentGame { get; set; }
-    public MiniGameManager MiniGameManager { get; private set; }
-    public GestureManager GestureManager { get; private set; }
-
-
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         CurrentGame = GameID.GAME_ID.START;
-        cameraUtils = FindObjectOfType<CameraUtils>();
-        miniGameManager = FindObjectOfType<MiniGameManager>();
-        gestureManager = FindObjectOfType<GestureManager>();
     }
 
     // Update is called once per frame

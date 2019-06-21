@@ -12,6 +12,7 @@ public class CameraUtils : MonoBehaviour
     bool firstToThirdTransition = false;
     bool thirdToFirstTransition = false;
     bool startThirdToFirstTransition = false;
+    bool isMirrorCamera = false;
 
     float rotated = 0;
     float degreeToRotate = 0;
@@ -65,6 +66,7 @@ public class CameraUtils : MonoBehaviour
         distanceToPlayer = Mathf.Abs(transform.position.z - player.transform.position.z);
         projectionMat = Camera.main.projectionMatrix;
         MirrorCamera(shouldMirrorCamera);
+
     }
 
     // Update is called once per frame
@@ -150,15 +152,25 @@ public class CameraUtils : MonoBehaviour
     {
         if (shouldMirrorCamera)
         {
-            Matrix4x4 mat = Camera.main.projectionMatrix;
-            mat *= Matrix4x4.Scale(new Vector3(-1, 1, 1));
-            Camera.main.projectionMatrix = mat;
-            shouldMirrorCamera = true;
+            if (!isMirrorCamera)
+            {
+                Matrix4x4 mat = Camera.main.projectionMatrix;
+                mat *= Matrix4x4.Scale(new Vector3(-1, 1, 1));
+                Camera.main.projectionMatrix = mat;
+                this.shouldMirrorCamera = true;
+                isMirrorCamera = true;
+            }
         }
         else
         {
-            Camera.main.projectionMatrix = projectionMat;
-            shouldMirrorCamera = false;
+            if (isMirrorCamera)
+            {
+                Matrix4x4 mat = Camera.main.projectionMatrix;
+                mat *= Matrix4x4.Scale(new Vector3(-1, 1, 1));
+                Camera.main.projectionMatrix = mat;
+                this.shouldMirrorCamera = false;
+                isMirrorCamera = false;
+            }
         }
     }
 

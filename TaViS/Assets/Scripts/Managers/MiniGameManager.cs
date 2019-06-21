@@ -26,6 +26,8 @@ public class MiniGameManager : MonoBehaviour
     {
         miniGames = new Dictionary<GameID.GAME_ID, MiniGame>();
         // TODO: Add Mini Game classes
+        miniGames.Add(GameID.GAME_ID.START, new StartGame());
+        miniGames.Add(GameID.GAME_ID.TIP_HAT_DRINK, new MeetGuestsAtBar());
         // miniGames.Add(GameID.GAME_ID.DANCE, FindObjectOfType<DanceMiniGame>());
     }
 
