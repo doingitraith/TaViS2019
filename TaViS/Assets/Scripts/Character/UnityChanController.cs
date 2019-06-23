@@ -7,31 +7,37 @@ public class UnityChanController : BasicAvatarController
     public override void Start()
     {
         // find transforms of model
-        SpineBase = GameObject.Find("hip").transform;
-        SpineMid = GameObject.Find("spine_02").transform;
-        Neck = GameObject.Find("neck").transform;
-        Head = GameObject.Find("head").transform;
-        ShoulderLeft = GameObject.Find("upperarm_l").transform;
-        ElbowLeft = GameObject.Find("lowerarm_l").transform;
-        WristLeft = GameObject.Find("hand_l").transform;
-        HandLeft = GameObject.Find("hand_l").transform;
-        ShoulderRight = GameObject.Find("upperarm_r").transform;
-        ElbowRight = GameObject.Find("lowerarm_r").transform;
-        WristRight = GameObject.Find("hand_r").transform;
-        HandRight = GameObject.Find("hand_r").transform;
-        HipLeft = GameObject.Find("upperleg_l").transform;
-        KneeLeft = GameObject.Find("lowerleg_l").transform;
-        AnkleLeft = GameObject.Find("foot_l").transform;
-        FootLeft = GameObject.Find("ball_l").transform;
-        HipRight = GameObject.Find("upperleg_r").transform;
-        KneeRight = GameObject.Find("lowerleg_r").transform;
-        AnkleRight = GameObject.Find("foot_r").transform;
-        FootRight = GameObject.Find("ball_r").transform;
-        SpineShoulder = GameObject.Find("spine_03").transform;
+        SpineBase = GameObject.Find("Character1_Hips").transform;
+        //SpineMid = GameObject.Find("Character1_Spine2").transform;
+        Neck = GameObject.Find("Character1_Neck").transform;
+        Head = GameObject.Find("Character1_Head").transform;
+        ShoulderLeft = GameObject.Find("Character1_LeftArm").transform;
+        ElbowLeft = GameObject.Find("Character1_LeftForeArm").transform;
+        WristLeft = GameObject.Find("Character1_LeftHand").transform;
+        //HandLeft = GameObject.Find("").transform;
+        ShoulderRight = GameObject.Find("Character1_RightArm").transform;
+        ElbowRight = GameObject.Find("Character1_RightForeArm").transform;
+        WristRight = GameObject.Find("Character1_RightHand").transform;
+        //HandRight = GameObject.Find("").transform;
+        HipLeft = GameObject.Find("Character1_LeftUpLeg").transform;
+        KneeLeft = GameObject.Find("Character1_LeftLeg").transform;
+        AnkleLeft = GameObject.Find("Character1_LeftFoot").transform;
+        FootLeft = GameObject.Find("Character1_LeftToeBase").transform;
+        HipRight = GameObject.Find("Character1_RightUpLeg").transform;
+        KneeRight = GameObject.Find("Character1_RightLeg").transform;
+        AnkleRight = GameObject.Find("Character1_RightFoot").transform;
+        FootRight = GameObject.Find("Character1_RightToeBase").transform;
+        SpineShoulder = GameObject.Find("Character1_Spine2").transform;
         //HandTipLeft = GameObject.Find("Character1_LeftHandIndex1").transform;
         //ThumbLeft = GameObject.Find("Character1_LeftHandThumb1").transform;
         //HandTipRight = GameObject.Find("Character1_RightHandIndex1").transform;
         //ThumbRight = GameObject.Find("Character1_RightHandThumb1").transform;
+        /*
+        SkirtL = GameObject.Find("J_L_Skirt_00").transform;
+        skirtInitL = Quaternion.Inverse(RootTransform.rotation) * SkirtL.rotation;
+        SkirtR = GameObject.Find("J_R_Skirt_00").transform;
+        skirtInitR = Quaternion.Inverse(RootTransform.rotation) * SkirtR.rotation;
+        */
 
         base.Start();
     }

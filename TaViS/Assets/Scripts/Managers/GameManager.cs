@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public GestureManager GestureManager;
     public GameID.GAME_ID CurrentGame { get; set; }
     public bool isRightHanded = false; // ;)
+    public float suspicousnessLevel = 10;
 
     void Awake()
     {

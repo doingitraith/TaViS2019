@@ -10425,6 +10425,7 @@ GameObject:
   m_Component:
   - component: {fileID: 456468}
   - component: {fileID: 11411398}
+  - component: {fileID: 5750167447069281093}
   m_Layer: 0
   m_Name: KinectModelRel
   m_TagString: Untagged
@@ -10460,6 +10461,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BodyManager: {fileID: 0}
+--- !u!114 &5750167447069281093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 166474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96e7752365b0acd44b6016be70e7582b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &166536
 GameObject:
   m_ObjectHideFlags: 0
