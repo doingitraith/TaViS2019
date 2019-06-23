@@ -267,7 +267,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 99.7, y: -27.600006}
+  m_AnchoredPosition: {x: 107.3, y: -55}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &181292478
@@ -546,7 +546,7 @@ MonoBehaviour:
   MiniGameManager: {fileID: 440813781}
   GestureManager: {fileID: 440813780}
   isRightHanded: 0
-  score: 10
+  suspicousnessLevel: 10
 --- !u!4 &440813779
 Transform:
   m_ObjectHideFlags: 0
@@ -578,6 +578,7 @@ MonoBehaviour:
   scoreThresholdGood: 850
   scoreThresholdVeryGood: 750
   scoreThresholdPerfect: 550
+  gestureSegmentTolerance: 0.1
 --- !u!114 &440813781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2203,7 +2204,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c714bf7d3e1652e43b8ae6e5fa840326, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Id: 0
-  GameName: 
-  StartPosition: {fileID: 0}
-  CameraStartRotation: {x: 0, y: 0, z: 0, w: 0}
