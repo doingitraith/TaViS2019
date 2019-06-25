@@ -27,7 +27,8 @@ public class GestureManager : MonoBehaviour
         WAVE_LEFT,
         PULL_LEFT,
         RAISE_ARMS,
-        SWIPE_LEG
+        SWIPE_LEG,
+        DRINK
     }
     
     // Start is called before the first frame update
@@ -68,11 +69,14 @@ public class GestureManager : MonoBehaviour
         string output = "";
         switch (e.GestureName)
         {
+            //test gestures, delete at end of project
             case GESTURENAME.SWIPE_LEFT: output = GESTURENAME.SWIPE_LEFT.ToString(); break;
             case GESTURENAME.WAVE_LEFT: output = GESTURENAME.WAVE_LEFT.ToString(); break;
             case GESTURENAME.RAISE_ARMS: output = GESTURENAME.RAISE_ARMS.ToString(); break;
             case GESTURENAME.SWIPE_LEG: output = GESTURENAME.SWIPE_LEG.ToString(); break;
             case GESTURENAME.PULL_LEFT: output = GESTURENAME.PULL_LEFT.ToString(); break;
+            // game 1
+            case GESTURENAME.DRINK: output = GESTURENAME.DRINK.ToString(); break;
           
             default: output = "UnknownGesture"; break;
         }
@@ -105,6 +109,12 @@ public class GestureManager : MonoBehaviour
         gestureList.Add(new Gesture(GESTURENAME.PULL_LEFT, pullLeft));
 
         gesturesByGame.Add(GameID.GAME_ID.START, gestureList);
+        gestureList.Clear();
+
+        IRelativeGestureSegment[] drink = { new DrinkSegment1(), new DrinkSegment2(), new DrinkSegment3()};
+        gestureList.Add(new Gesture(GESTURENAME.DRINK, drink));
+        gesturesByGame.Add(GameID.GAME_ID.TIP_HAT_DRINK, gestureList);
+
     }
 
     void TriggerGestureResult(GESTURENAME recognizedGesture)
@@ -154,7 +164,7 @@ public class GestureManager : MonoBehaviour
         //set the difficulty of your gestures here!
         switch (result.gestureName)
         {
-            case GESTURENAME.RAISE_ARMS: difficultyMod = 2; break;
+            case GESTURENAME.DRINK: difficultyMod = 2; break;
             default: break;
         }
 

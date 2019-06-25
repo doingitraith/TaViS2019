@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        CurrentGame = GameID.GAME_ID.START;
+        CurrentGame = GameID.GAME_ID.TIP_HAT_DRINK;
     }
 
     // Update is called once per frame
