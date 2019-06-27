@@ -32,7 +32,6 @@ public abstract class PickableObject : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Collision");
         if (!followPlayer)
         {
             if (other.gameObject.CompareTag("Hand"))

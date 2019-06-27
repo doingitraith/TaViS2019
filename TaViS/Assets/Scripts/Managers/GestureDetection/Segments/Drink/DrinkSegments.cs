@@ -16,7 +16,7 @@ public class DrinkSegment1 : IRelativeGestureSegment
         Vector3 hand = skeleton.getRawWorldPosition(JointType.HandLeft);
         Vector3 elbow = skeleton.getRawWorldPosition(JointType.ElbowLeft);
         Vector3 head = skeleton.getRawWorldPosition(JointType.Head);
-        Vector3 spine = skeleton.getRawWorldPosition(JointType.SpineShoulder);
+        Vector3 spine = skeleton.getRawWorldPosition(JointType.SpineMid);
 
         if (GameManager.Instance.isRightHanded)
         {

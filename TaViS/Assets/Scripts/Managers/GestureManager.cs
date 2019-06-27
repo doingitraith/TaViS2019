@@ -11,7 +11,7 @@ public class GestureManager : MonoBehaviour
     public int scoreThresholdVeryGood = 650;
     public int scoreThresholdPerfect = 550;
 
-    public float gestureSegmentTolerance = 0.1f;
+    public float gestureSegmentTolerance = 2.5f;
 
     private GestureController gc;
     //private MiniGameManager miniGameManager;
@@ -41,7 +41,7 @@ public class GestureManager : MonoBehaviour
         gesturesByGame = new Dictionary<GameID.GAME_ID, List<Gesture>>();
         InitDictionary();
         LoadGameGestures(currentGame);
-        currentGame = GameID.GAME_ID.START;
+        //currentGame = GameID.GAME_ID.START;
     }
 
     public void LoadGameGestures(GameID.GAME_ID newGameID)
@@ -95,7 +95,7 @@ public class GestureManager : MonoBehaviour
         gestureList.Add(new Gesture(GESTURENAME.TIP_HAT, tipHat));
 
         gesturesByGame.Add(GameID.GAME_ID.TIP_HAT_DRINK, gestureList);
-        gestureList.Clear();
+        //gestureList.Clear();
     }
 
     void TriggerGestureResult(GESTURENAME recognizedGesture)

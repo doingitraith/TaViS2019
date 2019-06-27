@@ -26,7 +26,7 @@ public class TipHatSegment1 : IRelativeGestureSegment
         //move hand to head
         if (hand.y > elbow.y)
         {
-            if (hand.y - Mathf.Abs(headTop.y) <= tolerance)
+            if (hand.y > headTop.y)
             {
                 return GesturePartResult.Succeed;
             }
@@ -55,7 +55,7 @@ public class TipHatSegment2 : IRelativeGestureSegment
         //move hand to head
         if (hand.y > elbow.y && hand.y > shoulder.y)
         {
-            if (hand.y > Mathf.Abs(headTop.y) + tolerance)
+            if (hand.y > headTop.y + tolerance)
             {
                 return GesturePartResult.Succeed;
             }
