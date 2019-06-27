@@ -80,11 +80,15 @@ public class BodySourceManager : MonoBehaviour
     {
         var isDetected = e.IsBodyTrackingIdValid && e.IsGestureDetected;
 
+        GestureManager.GESTURENAME recognized = GameManager.Instance.GestureManager.ConvertStringToGestureName(e.GestureID);
+        GameManager.Instance.GestureManager.VisualBuilderGestureRecognized(recognized, e.DetectionConfidence);
+        /*
         if (e.GestureID == "TipHat")
         {
             ConfidenceUI.text = "Confidence("+(counter++)+"): "+ e.DetectionConfidence;
         }
         //this.bodyText[bodyIndex] = text.ToString();
+        */
     }
 
     void OnApplicationQuit()
