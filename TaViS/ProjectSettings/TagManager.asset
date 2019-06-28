@@ -6,6 +6,8 @@ TagManager:
   tags:
   - 1stPerson
   - Hand
+  - trayHandleRight
+  - trayHandleLeft
   layers:
   - Default
   - TransparentFX
