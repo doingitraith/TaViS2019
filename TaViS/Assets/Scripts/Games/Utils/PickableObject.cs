@@ -33,31 +33,36 @@ public abstract class PickableObject : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!followPlayer)
+        if (!GameManager.Instance.playerCarriesObject)
         {
-            if (other.gameObject.CompareTag("Hand"))
+            if (!followPlayer)
             {
-                //Debug.Log("Collision " + other.name);
-                transform.SetParent(other.transform);
-                transform.position = other.transform.position; //new Vector3(other.transform.position.x + xOffset, other.transform.position.y + yOffset, other.transform.position.z + zOffset);
-                followPlayer = true;
-                StartCoroutine(DisableCollider(gameObject.GetComponent<Collider>()));
+                if (other.gameObject.CompareTag("Hand"))
+                {
+                    //Debug.Log("Collision " + other.name);
+                    transform.SetParent(other.transform);
+                    transform.position = other.transform.position; //new Vector3(other.transform.position.x + xOffset, other.transform.position.y + yOffset, other.transform.position.z + zOffset);
+                    followPlayer = true;
+                    GameManager.Instance.playerCarriesObject = true;
+                    StartCoroutine(DisableCollider(gameObject.GetComponent<Collider>()));
+                }
             }
-        }
-        else
-        {
-            if (other.gameObject.Equals(objectToMoveTo))
+            else
             {
-                followPlayer = false;
-                if (parentToTarget)
+                if (other.gameObject.Equals(objectToMoveTo))
                 {
-                    transform.SetParent(targetOnObjectToMoveTo.parent);
+                    followPlayer = false;
+                    if (parentToTarget)
+                    {
+                        transform.SetParent(targetOnObjectToMoveTo.parent);
+                    }
+                    else
+                    {
+                        transform.SetParent(null);
+                    }
+                    releaseObject = true;
+                    GameManager.Instance.playerCarriesObject = false;
                 }
-                else
-                {
-                    transform.SetParent(null);
-                }
-                releaseObject = true;
             }
         }
     }

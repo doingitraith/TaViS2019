@@ -6,6 +6,7 @@ using System;
 
 public class BasicAvatarController : MonoBehaviour
 {
+    private bool walking = false;
 
     // all kinect joints as transform objects
     public Transform SpineBase;
@@ -34,6 +35,8 @@ public class BasicAvatarController : MonoBehaviour
     public Transform HandTipRight;
     public Transform ThumbRight;
 
+    private Animator animator;
+
     // root transformation, used to determine the initial rotation of the complete model
     public Transform RootTransform;
 
@@ -52,6 +55,8 @@ public class BasicAvatarController : MonoBehaviour
     // called by derived class (e.g. UnityChanController) at the end of its own Start function after setting the available joints
     public virtual void Start()
     {
+        animator = gameObject.GetComponent<Animator>();
+        animator.enabled = false;
         allJoints = new Transform[] { SpineBase, SpineMid, Neck, Head, ShoulderLeft, ElbowLeft, WristLeft, HandLeft, ShoulderRight, ElbowRight, WristRight, HandRight, HipLeft, KneeLeft, AnkleLeft, FootLeft, HipRight, KneeRight, AnkleRight, FootRight, SpineShoulder, HandTipLeft, ThumbLeft, HandTipRight, ThumbRight };
         // check which joints were set
         foreach (JointType jt in Enum.GetValues(typeof(JointType)))
@@ -71,12 +76,30 @@ public class BasicAvatarController : MonoBehaviour
     // Update rotation of all known joints
     public virtual void Update()
     {
-        foreach (JointType jt in knownJoints.Keys)
+        if (Input.GetKeyDown(KeyCode.A))
         {
-            // the applyRelativeRotationChange function returns the new "local rotation" relative to the RootTransform Rotation...
-            Quaternion localRotTowardsRootTransform = MoCapAvatar.applyRelativeRotationChange(jt, initialModelJointRotations[jt]);
-            // ...therefore we have to multiply it with the RootTransform Rotation to get the global rotation of the joint
-            knownJoints[jt].rotation = RootTransform.rotation * localRotTowardsRootTransform;
+            SetWalking(!walking);
         }
+        if (!walking)
+        {
+            foreach (JointType jt in knownJoints.Keys)
+            {
+                // the applyRelativeRotationChange function returns the new "local rotation" relative to the RootTransform Rotation...
+                Quaternion localRotTowardsRootTransform = MoCapAvatar.applyRelativeRotationChange(jt, initialModelJointRotations[jt]);
+                // ...therefore we have to multiply it with the RootTransform Rotation to get the global rotation of the joint
+                knownJoints[jt].rotation = RootTransform.rotation * localRotTowardsRootTransform;
+            }
+        }
+    }
+
+    public void SetWalking(bool walking)
+    {
+        this.walking = walking;
+        gameObject.GetComponent<Animator>().enabled = walking;
+    }
+
+    public bool GetWalking()
+    {
+        return walking;
     }
 }

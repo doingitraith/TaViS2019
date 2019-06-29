@@ -79,7 +79,7 @@ public class CameraUtils : MonoBehaviour
         }
         else if (shouldShowBack || shouldShowFront)
         {
-            Rotate(360);
+            Rotate(180);
         }
 
 

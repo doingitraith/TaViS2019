@@ -15,6 +15,8 @@ public class MeetGuestsAtBar : MiniGame
             throw new System.Exception("Gestures for " + GameName + " empty");
 
         currentGesture = GestureNames[currentStep];
+        GameManager.Instance.GestureManager.checkPoints = GameObject.Find(GestureNames[currentStep].ToString());
+        ToggleChildrenActivation(GameManager.Instance.GestureManager.checkPoints, true);
 
         Debug.Log("Game started: " + GameName);
         Debug.Log("Current gesture: " + currentGesture);
@@ -30,6 +32,7 @@ public class MeetGuestsAtBar : MiniGame
     {
         base.OnGameFailed();
         Debug.Log("Game failed: " + GameName);
+        ToggleChildrenActivation(GameManager.Instance.GestureManager.checkPoints, false);
         throw new System.NotImplementedException();
     }
 
@@ -37,6 +40,7 @@ public class MeetGuestsAtBar : MiniGame
     {
         base.OnGameFinished();
         Debug.Log("Game finished: " + GameName);
+        ToggleChildrenActivation(GameManager.Instance.GestureManager.checkPoints, false);
         throw new System.NotImplementedException();
     }
 

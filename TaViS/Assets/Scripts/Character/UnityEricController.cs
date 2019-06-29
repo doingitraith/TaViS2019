@@ -41,8 +41,4 @@ public class UnityEricController : BasicAvatarController
         // apply base Update function, which rotates all known standard joints
         base.Update();
     }
-
-
-
-
 }

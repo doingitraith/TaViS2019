@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     public bool isRightHanded = false; // ;)
     public float suspicousnessLevel = 10;
     public float score = 0.0f;
+    public bool playerCarriesObject = false;
 
     void Awake()
     {

@@ -40,4 +40,14 @@ public abstract class MiniGame : MonoBehaviour
         isFailed = true;
     }
     public abstract void ResetGame();
+
+    protected void ToggleChildrenActivation(GameObject checkpoints, bool enabled)
+    {
+        checkpoints.SetActive(enabled);
+
+        foreach (Transform child in checkpoints.transform)
+        {
+            ToggleChildrenActivation(child.gameObject, enabled);
+        }
+    }
 }

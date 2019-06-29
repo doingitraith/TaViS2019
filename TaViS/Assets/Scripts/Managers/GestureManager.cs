@@ -19,6 +19,7 @@ public class GestureManager : MonoBehaviour
     public float gestureSegmentTolerance = 2.5f;
 
     public List<GESTURENAME> currentGestureNames = new List<GESTURENAME>();
+    public GameObject checkPoints;
 
     private GestureController gc;
     //private MiniGameManager miniGameManager;
