@@ -43,14 +43,7 @@ public class TrayControl : MiniGame
     // Start is called before the first frame update
     void Start()
     {
-        tray = GetComponent<Rigidbody>(); 
-     
-
-        //If player has grabbed handles left and right
-        if((handLeft.position == trayLeftHandle.position) && (handRight.position == trayRightHandle.position))
-        {
-            hasGrabbed = true;
-        } 
+  
            
     }
 
