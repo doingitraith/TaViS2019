@@ -3,29 +3,26 @@
 	<ProjectFile>
 		<Header>
 			<Date>2019-06-28</Date>
-			<Time>19:01:49.9605077+02:00</Time>
+			<Time>19:01:47.8204877+02:00</Time>
 			<Version>5</Version>
 			<Type>AdaBoostTrigger</Type>
 			<Function>
 				<Type>Analysis</Type>
-				<ProjectAttribute Name="TipHat" Type="BOOL" />
+				<ProjectAttribute Name="Drink" Type="BOOL" />
 				<ProjectAccompanyAttributes>
 					<Items Name="Confidence" Type="FLOAT" />
 					<Items Name="FirstFrameDetected" Type="BOOL" />
 				</ProjectAccompanyAttributes>
-				<DefaultTag xsi:type="BoolAttribute" Name="TipHat" Value="false" />
+				<DefaultTag xsi:type="BoolAttribute" Name="Drink" Value="false" />
 			</Function>
-			<ID>04c3cb6b-821b-444d-ae08-9d0fadd02b46</ID>
+			<ID>ff7664dd-5312-44c5-9a75-10699a73622d</ID>
 		</Header>
 		<Project_Data>
 			<Files>
 				<Name />
 				<Content>
 					<Items>
-						<File>E:/Users/IGE-Student/Documents/Kinect Studio/Repository/20190618_153921_00.vgbclip</File>
-					</Items>
-					<Items>
-						<File>../../../../Documents/Kinect Studio/Repository/20190628_150011_00.vgbclip</File>
+						<File>../../../../Documents/Kinect Studio/Repository/20190628_154102_00.vgbclip</File>
 					</Items>
 				</Content>
 			</Files>

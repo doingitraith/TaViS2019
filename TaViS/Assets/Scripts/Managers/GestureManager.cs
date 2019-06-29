@@ -18,14 +18,17 @@ public class GestureManager : MonoBehaviour
 
     public float gestureSegmentTolerance = 2.5f;
 
+    public List<GESTURENAME> currentGestureNames = new List<GESTURENAME>();
+
     private GestureController gc;
     //private MiniGameManager miniGameManager;
     private GameID.GAME_ID currentGame;
     private Dictionary<GameID.GAME_ID, List<Gesture>> gesturesByGame;
     private Dictionary<GameID.GAME_ID, List<GESTURENAME>> namesByGame;
-    private List<GESTURENAME> currentGestureNames = new List<GESTURENAME>();
 
     private int gesturePauseCount = 0;
+
+    private bool isDetecting;
 
     //available gesture names for gamemanager,please keep updated
     public enum GESTURENAME
@@ -42,13 +45,13 @@ public class GestureManager : MonoBehaviour
 
     public GESTURENAME ConvertStringToGestureName(string gestureID)
     {
-        gestureID.Replace(" ", "");
-        gestureID.Replace("_", "");
-        gestureID.ToLower();
+        gestureID = gestureID.Replace(" ", "");
+        gestureID = gestureID.Replace("_", "");
+        gestureID = gestureID.ToLower();
         switch (gestureID)
         {
-            case "drink": return GESTURENAME.DRINK;
             case "tiphat": return GESTURENAME.TIP_HAT;
+            case "drink": return GESTURENAME.DRINK;
             default: return GESTURENAME.RAISE_ARMS;
         }
     }
@@ -60,9 +63,10 @@ public class GestureManager : MonoBehaviour
         //miniGameManager = GameObject.Find("MiniGameManager").GetComponent<MiniGameManager>();
         currentGame = GameManager.Instance.CurrentGame;
         gesturesByGame = new Dictionary<GameID.GAME_ID, List<Gesture>>();
+        namesByGame = new Dictionary<GameID.GAME_ID, List<GESTURENAME>>();
         InitGameDictionary();
         InitNameDictionary();
-        LoadGameGestures(currentGame);
+        //LoadGameGestures(currentGame);
         //currentGame = GameID.GAME_ID.START;
     }
 
@@ -111,7 +115,7 @@ public class GestureManager : MonoBehaviour
           
             default: output = "UnknownGesture"; break;
         }
-        Debug.Log(output + "Recognized");
+        Debug.Log(output + " Recognized");
         //the gamelogic to perform --> minigame manager
         TriggerGestureResult(e.GestureName, false, null);
     }
@@ -120,14 +124,14 @@ public class GestureManager : MonoBehaviour
     void InitGameDictionary()
     {
         List<Gesture> gestureList = new List<Gesture>();
-        gc.GestureRecognizedInController += OnGestureRecognized;
+        //gc.GestureRecognizedInController += OnGestureRecognized;
 
         //GAME 1
-        IRelativeGestureSegment[] drink = { new DrinkSegment1(), new DrinkSegment2(), new DrinkSegment3()};
-        gestureList.Add(new Gesture(GESTURENAME.DRINK, drink));
-
         IRelativeGestureSegment[] tipHat = { new TipHatSegment1(), new TipHatSegment2(), new TipHatSegment1() };
         gestureList.Add(new Gesture(GESTURENAME.TIP_HAT, tipHat));
+
+        IRelativeGestureSegment[] drink = { new DrinkSegment1(), new DrinkSegment2(), new DrinkSegment3()};
+        gestureList.Add(new Gesture(GESTURENAME.DRINK, drink));
 
         gesturesByGame.Add(GameID.GAME_ID.TIP_HAT_DRINK, gestureList);
         //gestureList.Clear();
@@ -136,27 +140,30 @@ public class GestureManager : MonoBehaviour
     void InitNameDictionary()
     {
         List<GESTURENAME> nameList = new List<GESTURENAME>();
-        gc.GestureRecognizedInController += OnGestureRecognized;
+        //gc.GestureRecognizedInController += OnGestureRecognized;
 
         //GAME 1
-        nameList.Add(GESTURENAME.DRINK);
         nameList.Add(GESTURENAME.TIP_HAT);
+        nameList.Add(GESTURENAME.DRINK);
         namesByGame.Add(GameID.GAME_ID.TIP_HAT_DRINK, nameList);
     }
 
     void TriggerGestureResult(GESTURENAME recognizedGesture, bool resultFromConfidence, Nullable<float> confidence)
     {
-        GestureEvaluationResult result;
-        if (!resultFromConfidence)
+        if (recognizedGesture == GameManager.Instance.MiniGameManager.currMiniGame.currentGesture)
         {
-            result = GetPointsFromEvaluation(recognizedGesture, false, null);
+            GestureEvaluationResult result;
+            if (!resultFromConfidence)
+            {
+                result = GetPointsFromEvaluation(recognizedGesture, false, null);
+            }
+            else
+            {
+                result = GetPointsFromEvaluation(recognizedGesture, true, confidence);
+            }
+            result.score = GetFinalGestureEvaluationResult(result);
+            GameManager.Instance.MiniGameManager.TriggerGestureResult(result);
         }
-        else
-        {
-            result = GetPointsFromEvaluation(recognizedGesture, true, confidence);
-        }
-        result.score = GetFinalGestureEvaluationResult(result);
-        GameManager.Instance.MiniGameManager.TriggerGestureResult(result);
     }
 
     GestureEvaluationResult GetPointsFromEvaluation(GESTURENAME recognizedGesture, bool useConfidence, Nullable<float> confidence)
@@ -168,19 +175,19 @@ public class GestureManager : MonoBehaviour
             {
                 performance = GestureEvaluationResult.GESTURE_PERFORMANCE.PERFECT;
             }
-            else if (gesturePauseCount <= scoreThresholdVeryGood)
+            if (gesturePauseCount <= scoreThresholdVeryGood)
             {
                 performance = GestureEvaluationResult.GESTURE_PERFORMANCE.VERY_GOOD;
             }
-            else if (gesturePauseCount <= scoreThresholdGood)
+            if (gesturePauseCount <= scoreThresholdGood)
             {
                 performance = GestureEvaluationResult.GESTURE_PERFORMANCE.GOOD;
             }
-            else if (gesturePauseCount <= scoreThresholdOk)
+            if (gesturePauseCount <= scoreThresholdOk)
             {
                 performance = GestureEvaluationResult.GESTURE_PERFORMANCE.OK;
             }
-            else if (gesturePauseCount <= scoreThresholdBad)
+            if (gesturePauseCount <= scoreThresholdBad)
             {
                 performance = GestureEvaluationResult.GESTURE_PERFORMANCE.BAD;
             }
@@ -193,19 +200,19 @@ public class GestureManager : MonoBehaviour
             {
                 performance = GestureEvaluationResult.GESTURE_PERFORMANCE.PERFECT;
             }
-            else if (confidence <= confidenceThresholdVeryGood)
+            if (confidence <= confidenceThresholdVeryGood)
             {
                 performance = GestureEvaluationResult.GESTURE_PERFORMANCE.VERY_GOOD;
             }
-            else if (confidence <= confidenceThresholdGood)
+            if (confidence <= confidenceThresholdGood)
             {
                 performance = GestureEvaluationResult.GESTURE_PERFORMANCE.GOOD;
             }
-            else if (confidence <= confidenceThresholdOk)
+            if (confidence <= confidenceThresholdOk)
             {
                 performance = GestureEvaluationResult.GESTURE_PERFORMANCE.OK;
             }
-            else if (confidence <= confidenceThresholdBad)
+            if (confidence <= confidenceThresholdBad)
             {
                 performance = GestureEvaluationResult.GESTURE_PERFORMANCE.BAD;
             }
@@ -216,7 +223,8 @@ public class GestureManager : MonoBehaviour
 
     public void VisualBuilderGestureRecognized(GESTURENAME name, float confidence)
     {
-        if (!currentGestureNames.Contains(name)){
+        if (!currentGestureNames.Contains(name) || !isDetecting)
+        {
             return;
         }
         Debug.Log(name.ToString() + " RECOGNIZED");
@@ -239,5 +247,17 @@ public class GestureManager : MonoBehaviour
         }
 
         return difficultyMod * (int)result.performance;
+    }
+
+    public void StartDetecting()
+    {
+        gc.GestureRecognizedInController += OnGestureRecognized;
+        isDetecting = true;
+    }
+
+    public void StopDetecting()
+    {
+        gc.GestureRecognizedInController -= OnGestureRecognized;
+        isDetecting = false;
     }
 }

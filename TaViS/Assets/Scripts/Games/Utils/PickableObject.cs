@@ -9,6 +9,7 @@ public abstract class PickableObject : MonoBehaviour
     public Transform targetOnObjectToMoveTo;
     protected bool releaseObject = false;
     protected bool followPlayer = false;
+    protected bool parentToTarget = false;
     public float xOffset = 0.05f;
     public float yOffset = 0.05f;
     public float zOffset = 0.05f;
@@ -36,11 +37,11 @@ public abstract class PickableObject : MonoBehaviour
         {
             if (other.gameObject.CompareTag("Hand"))
             {
+                //Debug.Log("Collision " + other.name);
                 transform.SetParent(other.transform);
-                transform.position = new Vector3(other.transform.position.x + xOffset,
-                                                 other.transform.position.y + yOffset,
-                                                 other.transform.position.z + zOffset);
+                transform.position = other.transform.position; //new Vector3(other.transform.position.x + xOffset, other.transform.position.y + yOffset, other.transform.position.z + zOffset);
                 followPlayer = true;
+                StartCoroutine(DisableCollider(gameObject.GetComponent<Collider>()));
             }
         }
         else
@@ -48,7 +49,14 @@ public abstract class PickableObject : MonoBehaviour
             if (other.gameObject.Equals(objectToMoveTo))
             {
                 followPlayer = false;
-                transform.SetParent(null);
+                if (parentToTarget)
+                {
+                    transform.SetParent(targetOnObjectToMoveTo.parent);
+                }
+                else
+                {
+                    transform.SetParent(null);
+                }
                 releaseObject = true;
             }
         }
@@ -72,7 +80,14 @@ public abstract class PickableObject : MonoBehaviour
         {
             releaseObject = false;
         }
-
+      
         timeElapsed += Time.deltaTime;
+    }
+
+    IEnumerator DisableCollider(Collider other)
+    {
+        other.gameObject.GetComponent<Collider>().enabled = false;
+        yield return new WaitForSeconds(0.5f);
+        other.gameObject.GetComponent<Collider>().enabled = true;
     }
 }

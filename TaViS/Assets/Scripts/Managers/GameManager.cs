@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public GameID.GAME_ID CurrentGame { get; set; }
     public bool isRightHanded = false; // ;)
     public float suspicousnessLevel = 10;
+    public float score = 0.0f;
 
     void Awake()
     {
@@ -33,5 +34,15 @@ public class GameManager : MonoBehaviour
     void Update()
     {
 
+    }
+
+    public void ChangeScore(float score)
+    {
+        this.score += score;
+    }
+
+    public void ChangeSuspicousness(float suspicousness)
+    {
+        this.suspicousnessLevel += suspicousness;
     }
 }

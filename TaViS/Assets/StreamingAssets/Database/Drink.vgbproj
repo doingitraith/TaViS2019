@@ -3,29 +3,26 @@
 	<ProjectFile>
 		<Header>
 			<Date>2019-06-28</Date>
-			<Time>17:44:32.1733368+02:00</Time>
+			<Time>17:42:22.4173930+02:00</Time>
 			<Version>5</Version>
 			<Type>AdaBoostTrigger</Type>
 			<Function>
 				<Type>Training</Type>
-				<ProjectAttribute Name="TipHat" Type="BOOL" />
+				<ProjectAttribute Name="Drink" Type="BOOL" />
 				<ProjectAccompanyAttributes>
 					<Items Name="Confidence" Type="FLOAT" />
 					<Items Name="FirstFrameDetected" Type="BOOL" />
 				</ProjectAccompanyAttributes>
-				<DefaultTag xsi:type="BoolAttribute" Name="TipHat" Value="false" />
+				<DefaultTag xsi:type="BoolAttribute" Name="Drink" Value="false" />
 			</Function>
-			<ID>f7ab98fe-0c80-4dec-a41a-d37d2b546b71</ID>
+			<ID>faf4d200-5b64-45e2-ac45-19060b6732f2</ID>
 		</Header>
 		<Project_Data>
 			<Files>
 				<Name />
 				<Content>
 					<Items>
-						<File>E:/Users/IGE-Student/Documents/Kinect Studio/Repository/20190618_153050_00.vgbclip</File>
-					</Items>
-					<Items>
-						<File>E:/Users/IGE-Student/Documents/Kinect Studio/Repository/20190618_153409_00.vgbclip</File>
+						<File>../../../../Documents/Kinect Studio/Repository/20190628_142944_00.vgbclip</File>
 					</Items>
 					<Items>
 						<File>../../../../Documents/Kinect Studio/Repository/20190628_143811_00.vgbclip</File>
@@ -48,9 +45,9 @@
 			<Items xsi:type="FloatAttribute" Name="Weight Of False Positives During Auto Find" Value="0.5" MaxValue="1" MinValue="0" />
 			<Items xsi:type="IntAttribute" Name="Manual Filter Params: Num Frames To Filter" Value="5" MaxValue="10" MinValue="1" />
 			<Items xsi:type="FloatAttribute" Name="Manual Filter Params: Threshold" Value="0.001" MaxValue="1" MinValue="0" />
-			<Items xsi:type="BoolAttribute" Name="Duplicate And Mirror Data During Training" Value="false" />
+			<Items xsi:type="BoolAttribute" Name="Duplicate And Mirror Data During Training" Value="true" />
 			<Items xsi:type="IntAttribute" Name="% CPU For Training" Value="95" MaxValue="100" MinValue="1" />
-			<Items xsi:type="BoolAttribute" Name="Use Hands Data" Value="false" />
+			<Items xsi:type="BoolAttribute" Name="Use Hands Data" Value="true" />
 			<Items xsi:type="BoolAttribute" Name="Ignore Left Arm" Value="false" />
 			<Items xsi:type="BoolAttribute" Name="Ignore Right Arm" Value="false" />
 			<Items xsi:type="BoolAttribute" Name="Ignore Lower Body" Value="true" />
