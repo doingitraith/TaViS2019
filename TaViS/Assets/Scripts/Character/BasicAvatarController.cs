@@ -7,6 +7,7 @@ using System;
 public class BasicAvatarController : MonoBehaviour
 {
     private bool walking = false;
+    private bool drinking = false;
 
     // all kinect joints as transform objects
     public Transform SpineBase;
@@ -76,6 +77,10 @@ public class BasicAvatarController : MonoBehaviour
     // Update rotation of all known joints
     public virtual void Update()
     {
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            gameObject.GetComponent<Animator>().enabled = true;
+        }
         if (Input.GetKeyDown(KeyCode.A))
         {
             SetWalking(!walking);
