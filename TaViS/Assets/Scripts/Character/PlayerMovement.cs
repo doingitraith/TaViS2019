@@ -58,8 +58,9 @@ public class PlayerMovement : MonoBehaviour
                 }
                 else
                 {
-                    transform.rotation = Quaternion.Slerp(transform.rotation, currentNode.rotation, Time.deltaTime * walkingSpeed);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, currentNode.rotation, 1);
                     SetWalking(false, transform);
+                    gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
                     GameManager.Instance.CameraUtils.GoToFrontOrBackView(CameraUtils.FACING.FRONT);
                 }
             }

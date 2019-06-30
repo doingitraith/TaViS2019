@@ -139,4 +139,9 @@ public class CheckpointManager : MonoBehaviour
     {
         return actor;
     }
+
+    public bool GetFirst()
+    {
+        return first;
+    }
 }

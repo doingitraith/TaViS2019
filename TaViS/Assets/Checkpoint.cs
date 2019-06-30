@@ -27,13 +27,16 @@ public class Checkpoint : MonoBehaviour
             // must be the exact same bodypart e.g left hand not right hand from start to finish
             else if (other.gameObject.Equals(cm.GetActor()))
             {
-                switch (name)
+                if (cm.GetFirst())
                 {
-                    case "1": cm.SetMiddle(); break;
-                    case "2": cm.SetLast(); break;
+                    switch (name)
+                    {
+                        case "1": cm.SetMiddle(); break;
+                        case "2": cm.SetLast(); break;
+                    }
+                    cm.IncreaseScore();
+                    gameObject.SetActive(false);
                 }
-                cm.IncreaseScore();
-                gameObject.SetActive(false);
             }
         }
     }
