@@ -6,15 +6,14 @@ using Windows.Kinect;
 public class TrayControl : MiniGame
 {
     GameObject pointMan;
-    Rigidbody tray;
+    Rigidbody rb;
 
-    Vector3 handLeft;
-    Vector3 handRight;
+    //Vector3 handLeft;
+    //Vector3 handRight;
 
     bool hasGrabbed = false;
 
-    float deltaY;
-
+ 
     public override void OnGameFailed()
     {
         throw new System.NotImplementedException();
@@ -43,7 +42,7 @@ public class TrayControl : MiniGame
     // Start is called before the first frame update
     void Start()
     {
-  
+        //rb = GetComponent<Rigidbody>();
            
     }
 

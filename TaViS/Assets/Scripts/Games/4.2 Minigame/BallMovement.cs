@@ -22,7 +22,11 @@ public class BallMovement : MonoBehaviour
         ball = GetComponent<Rigidbody>();
 
         //initial velocity, können es random machen, sodass der Spieler balancieren muss
-        ball.velocity = new Vector3(1, 0, 0);
+        float x = Random.Range(0.0f, 0.5f);
+        float y = Random.Range(0.0f, 0.5f);
+        float z = Random.Range(0.0f, 0.5f);
+
+        ball.velocity = new Vector3(x, y, z);
     }
 
     // Update is called once per frame
