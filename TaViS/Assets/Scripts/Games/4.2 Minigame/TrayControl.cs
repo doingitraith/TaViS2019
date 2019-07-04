@@ -53,7 +53,7 @@ public class TrayControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if () { }
+        
         transform.Rotate(0, 0, rotation * Time.deltaTime);
         
     }
