@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Windows.Kinect;
+using Microsoft.Kinect.VisualGestureBuilder;
 
 public class GestureController : MonoBehaviour
 {
@@ -11,8 +12,7 @@ public class GestureController : MonoBehaviour
     /// <summary>
     /// The list of all gestures we are currently looking for
     /// </summary>
-    private List<Gesture> gestures = new List<Gesture>();
-
+    private List<Gesture> gestures = new List<Gesture>(); 
     /// <summary>
     /// Initializes a new instance of the <see cref="GestureController"/> class.
     /// </summary>

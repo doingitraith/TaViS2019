@@ -5,13 +5,15 @@ using UnityEngine;
 public abstract class PickableObject : MonoBehaviour
 {
     //head, tablet, etc
-    protected GameObject objectToMoveTo;
-    protected Transform targetOnObjectToMoveTo;
+    public GameObject objectToMoveTo;
+    public Transform targetOnObjectToMoveTo;
     protected bool releaseObject = false;
     protected bool followPlayer = false;
+    protected bool parentToTarget = false;
     public float xOffset = 0.05f;
     public float yOffset = 0.05f;
     public float zOffset = 0.05f;
+    float timeElapsed = .0f;
     public float autoMoveSpeed = 2;
     public float autoRotationSpeed = 2;
     // Start is called before the first frame update
@@ -20,8 +22,23 @@ public abstract class PickableObject : MonoBehaviour
         
     }
 
+    public void ReleaseObject()
+    {
+        followPlayer = false;
+        if (parentToTarget)
+        {
+            transform.SetParent(targetOnObjectToMoveTo.parent);
+        }
+        else
+        {
+            transform.SetParent(null);
+        }
+        releaseObject = true;
+        GameManager.Instance.playerCarriesObject = false;
+    }
+
     // Update is called once per frame
-    void Update()
+    protected void Update()
     {
         if (releaseObject)
         {
@@ -29,45 +46,64 @@ public abstract class PickableObject : MonoBehaviour
         }
     }
 
-    void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (!followPlayer)
+        if (GameManager.Instance.CurrentGame.Equals(GameID.GAME_ID.TIP_HAT_DRINK))
         {
-            if (collision.gameObject.CompareTag("Hand"))
+            if (!GameManager.Instance.playerCarriesObject)
             {
-                transform.SetParent(collision.transform);
-                transform.position = new Vector3(collision.transform.position.x + xOffset,
-                                                 collision.transform.position.y + yOffset,
-                                                 collision.transform.position.z + zOffset);
-                followPlayer = true;
+                if (!followPlayer)
+                {
+                    if (other.gameObject.CompareTag("Hand"))
+                    {
+                        //Debug.Log("Collision " + other.name);
+                        transform.SetParent(other.transform);
+                        transform.position = other.transform.position; //new Vector3(other.transform.position.x + xOffset, other.transform.position.y + yOffset, other.transform.position.z + zOffset);
+                        followPlayer = true;
+                        GameManager.Instance.playerCarriesObject = true;
+                        StartCoroutine(DisableCollider(gameObject.GetComponent<Collider>()));
+                    }
+                }
             }
-        }
-        else
-        {
-            if (collision.gameObject.Equals(objectToMoveTo))
+            else
             {
-                followPlayer = false;
-                transform.SetParent(null);
-                releaseObject = true;
+                if (other.gameObject.Equals(objectToMoveTo))
+                {
+                    if (this is Hat)
+                        return;
+
+                    ReleaseObject();
+                }
             }
         }
     }
 
     protected void OnTargetObjectReached()
-    { 
+    {
+        float t = timeElapsed / autoMoveSpeed;
         if (transform.position != targetOnObjectToMoveTo.position)
         {
-            transform.position = Vector3.Lerp(transform.position, targetOnObjectToMoveTo.position, Time.deltaTime * autoMoveSpeed);
+            transform.position = Vector3.Lerp(transform.position, targetOnObjectToMoveTo.position, t);
         }
 
+        t = timeElapsed / autoRotationSpeed;
         if (transform.rotation != targetOnObjectToMoveTo.rotation)
         {
-            transform.rotation = Quaternion.Lerp(transform.rotation, targetOnObjectToMoveTo.transform.rotation, Time.deltaTime * autoRotationSpeed);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetOnObjectToMoveTo.transform.rotation, t);
         }
 
         if(transform.position == targetOnObjectToMoveTo.position && transform.rotation == targetOnObjectToMoveTo.rotation)
         {
             releaseObject = false;
         }
+      
+        timeElapsed += Time.deltaTime;
+    }
+
+    IEnumerator DisableCollider(Collider other)
+    {
+        other.gameObject.GetComponent<Collider>().enabled = false;
+        yield return new WaitForSeconds(0.5f);
+        other.gameObject.GetComponent<Collider>().enabled = true;
     }
 }

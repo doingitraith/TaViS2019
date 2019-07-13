@@ -79,7 +79,7 @@ public class CameraUtils : MonoBehaviour
         }
         else if (shouldShowBack || shouldShowFront)
         {
-            Rotate(360);
+            Rotate(180);
         }
 
 
@@ -239,9 +239,11 @@ public class CameraUtils : MonoBehaviour
         {
             case FACING.FRONT:
                 shouldShowFront = true;
+                shouldShowBack = false;
                 break;
             case FACING.BACK:
                 shouldShowBack = true;
+                shouldShowFront = false;
                 break;
         }
     }

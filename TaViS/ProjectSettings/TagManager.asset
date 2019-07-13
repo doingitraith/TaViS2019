@@ -5,6 +5,13 @@ TagManager:
   serializedVersion: 2
   tags:
   - 1stPerson
+  - Hand
+  - Checkpoint
+  - Path
+  - handleR
+  - handleL
+  - appleCounter
+  - apple
   layers:
   - Default
   - TransparentFX

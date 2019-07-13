@@ -11,12 +11,13 @@ public class GestureEvaluationResult
 
     public enum GESTURE_PERFORMANCE
     {
-        INVALID,
-        BAD,
-        OK,
-        GOOD,
-        VERY_GOOD,
-        PERFECT
+        NONE = 0,
+        INVALID = 1,
+        BAD = -300,
+        OK = 100,
+        GOOD = 300,
+        VERY_GOOD = 600,
+        PERFECT = 900
     }
 
     public GestureEvaluationResult(GestureManager.GESTURENAME gestureName, GESTURE_PERFORMANCE performance)

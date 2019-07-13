@@ -35,3 +35,22 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+TaViS/Assets/BodyGuards/
+
+TaViS/Assets/Eric\.meta
+
+TaViS/Assets/Eric/Demo/
+
+TaViS/Assets/Eric/rp_eric_rigged_001/Materials/
+
+TaViS/Assets/Eric/
+
+*.anim
+
+*.fbx
+*.meta
+
+TaViS/Assets/FreeNightSky/Materials/
+
+TaViS/Assets/FreeNightSky/Textures/
