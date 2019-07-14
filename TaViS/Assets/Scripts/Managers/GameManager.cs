@@ -53,5 +53,6 @@ public class GameManager : MonoBehaviour
     public void ChangeSuspicousness(float suspicousness)
     {
         this.suspicousnessLevel += suspicousness;
+        Mathf.Clamp(suspicousnessLevel, 0, scoreDangerous);
     }
 }

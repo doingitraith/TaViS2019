@@ -7,6 +7,7 @@ using System;
 public class BasicAvatarController : MonoBehaviour
 {
     private bool walking = false;
+    private bool idle = false;
     private bool drinking = false;
     public bool textPlaying = true;
 
@@ -60,7 +61,7 @@ public class BasicAvatarController : MonoBehaviour
     public virtual void Start()
     {
         animator = gameObject.GetComponent<Animator>();
-        animator.enabled = false;
+        //animator.enabled = false;
         allJoints = new Transform[] { SpineBase, SpineMid, Neck, Head, ShoulderLeft, ElbowLeft, WristLeft, HandLeft, ShoulderRight, ElbowRight, WristRight, HandRight, HipLeft, KneeLeft, AnkleLeft, FootLeft, HipRight, KneeRight, AnkleRight, FootRight, SpineShoulder, HandTipLeft, ThumbLeft, HandTipRight, ThumbRight };
         // check which joints were set
         foreach (JointType jt in Enum.GetValues(typeof(JointType)))
@@ -81,14 +82,11 @@ public class BasicAvatarController : MonoBehaviour
     // Update rotation of all known joints
     public virtual void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            SetWalking(!walking);
-        }
         if (!textPlaying)
         {
             if (!walking)
             {
+                animator.enabled = false;
                 foreach (JointType jt in knownJoints.Keys)
                 {
                     // the applyRelativeRotationChange function returns the new "local rotation" relative to the RootTransform Rotation...
@@ -100,12 +98,29 @@ public class BasicAvatarController : MonoBehaviour
                 }
             }
         }
+        else
+        {
+            if (!walking)
+            {
+                animator.SetBool("Rest", true);
+            }
+            else
+            {
+                animator.SetBool("Rest", false);
+            }
+        }
     }
 
     public void SetWalking(bool walking)
     {
         this.walking = walking;
-        gameObject.GetComponent<Animator>().enabled = walking;
+        animator.enabled = walking;
+    }
+
+    public void SetIdle(bool idle)
+    {
+        this.idle = idle;
+        animator.enabled = idle;
     }
 
     public bool GetWalking()

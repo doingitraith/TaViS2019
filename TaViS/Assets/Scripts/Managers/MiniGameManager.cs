@@ -30,7 +30,7 @@ public class MiniGameManager : MonoBehaviour
     {
         if (isTransitioning)
         {
-            if (!playerMovement.GetWaklking())
+            if (!playerMovement.GetWalking())
             {
                 isTransitioning = false;
                 StartNextGame();
@@ -61,19 +61,20 @@ public class MiniGameManager : MonoBehaviour
         {
             GameManager.Instance.Ui.UpdateFeedbackTextGesture(result.performance, currMiniGame.currentGesture, null);
         }
-        else { 
+        else
+        { 
             GameManager.Instance.Ui.UpdateFeedbackTextGesture(result.performance, null, null);
         }
 
         if (result.performance == GestureEvaluationResult.GESTURE_PERFORMANCE.BAD ||
             result.performance == GestureEvaluationResult.GESTURE_PERFORMANCE.INVALID)
-            GameManager.Instance.ChangeSuspicousness(10.0f);
-        if (result.performance == GestureEvaluationResult.GESTURE_PERFORMANCE.OK)
             GameManager.Instance.ChangeSuspicousness(5.0f);
+        if (result.performance == GestureEvaluationResult.GESTURE_PERFORMANCE.OK)
+            GameManager.Instance.ChangeSuspicousness(3.0f);
         if (result.performance == GestureEvaluationResult.GESTURE_PERFORMANCE.VERY_GOOD)
-            GameManager.Instance.ChangeSuspicousness(-5.0f);
+            GameManager.Instance.ChangeSuspicousness(-3.0f);
         if (result.performance == GestureEvaluationResult.GESTURE_PERFORMANCE.PERFECT)
-            GameManager.Instance.ChangeSuspicousness(-10.0f);
+            GameManager.Instance.ChangeSuspicousness(-5.0f);
 
         if (!currMiniGame.Id.Equals(GameID.GAME_ID.DANCE))
             currMiniGame.OnGameNextStep();

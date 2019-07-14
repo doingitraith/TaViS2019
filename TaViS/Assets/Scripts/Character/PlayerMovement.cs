@@ -68,6 +68,7 @@ public class PlayerMovement : MonoBehaviour
                         transform.rotation = Quaternion.Slerp(transform.rotation, currentNode.rotation, 1);
                         barReached = true;
                         SetWalking(false, transform);
+                        bm.SetIdle(true);
                         GameManager.Instance.CameraUtils.GoToFrontOrBackView(CameraUtils.FACING.FRONT);
                     }
                     if (currentNodeIndex == 5)
@@ -93,6 +94,7 @@ public class PlayerMovement : MonoBehaviour
                 {
                     transform.rotation = Quaternion.Slerp(transform.rotation, currentNode.rotation, 1);
                     SetWalking(false, transform);
+                    bm.SetIdle(true);
                     rb.velocity = Vector3.zero;
                     GameManager.Instance.CameraUtils.GoToFrontOrBackView(CameraUtils.FACING.FRONT);
                 }
@@ -111,7 +113,7 @@ public class PlayerMovement : MonoBehaviour
         this.walking = walking;
     }
 
-    public bool GetWaklking()
+    public bool GetWalking()
     {
         return walking;
     }

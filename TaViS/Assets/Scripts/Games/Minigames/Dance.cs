@@ -37,7 +37,6 @@ public class Dance : MiniGame
         Debug.Log("Game started: " + GameName);
         Debug.Log("Current gesture: " + currentGesture);
         moveImages = GameObject.Find("MoveImages").gameObject;
-        
         texts = moveImages.GetComponentsInChildren<Text>();
         images = moveImages.GetComponentsInChildren<Image>();
 

@@ -39,6 +39,7 @@ public class RetakePhoto : MonoBehaviour
         }
         timerSeconds = 3;
         countdown.text = "";
+        GetComponent<AudioSource>().Play();
         isPhotoTaken = true;
         GetComponent<Collider>().enabled = true;
         photo.gameObject.SetActive(true);

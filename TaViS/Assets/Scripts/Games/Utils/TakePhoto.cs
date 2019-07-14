@@ -38,6 +38,7 @@ public class TakePhoto : MonoBehaviour
         }
         timerSeconds = 3;
         countdown.text = "";
+        GetComponent<AudioSource>().Play();
         GetComponentInChildren<TMPro.TextMeshPro>().SetText("Accept");
         isPhotoSaved = true;
         isPhotoTaken = true;

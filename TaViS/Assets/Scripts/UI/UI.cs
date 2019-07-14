@@ -135,47 +135,18 @@ public class UI : MonoBehaviour
     IEnumerator LetterByLetter(Color color)
     {
         StartCoroutine(FadeIn(color));
+        //LetterbyLetter
         foreach (char letter in feedBackText)
         {
             feedBack.text += "" + letter;
             yield return new WaitForSeconds(0.035f);
         }
+        //WaitBeforeFadeOut
         for (float i = 0; i < pause; i += Time.deltaTime)
         {
             yield return null;
         }
-        Color colorText = feedBack.color;
-        Color colorBackground = FeedbackBackground.color;
-        for (float i = 0.01f; i < fadeOut; i += Time.deltaTime)
-        {
-            feedBack.color = Color.Lerp(colorText, Color.clear, i / fadeOut);
-            FeedbackBackground.color = Color.Lerp(colorBackground, Color.clear, i / fadeOut);
-            yield return null;
-        }
-
-        if (GameManager.Instance.CurrentGame.Equals(GameID.GAME_ID.START))
-        {
-            photoParent.SetActive(true);
-        }
-        if (GameManager.Instance.CurrentGame.Equals(GameID.GAME_ID.TIP_HAT_DRINK))
-        {
-            suspiciousnessParent.SetActive(true);
-        }
-
-        eric.textPlaying = false;
-    }
-
-    IEnumerator WaitBeforeFadeOut()
-    {
-        for (float i = 0; i < pause; i += Time.deltaTime)
-        {
-            yield return null;
-        }
-        StartCoroutine(FadeOut());
-    }
-
-    IEnumerator FadeOut()
-    {
+        //FadeOut
         Color colorText = feedBack.color;
         Color colorBackground = FeedbackBackground.color;
         for (float i = 0.01f; i < fadeOut; i += Time.deltaTime)
