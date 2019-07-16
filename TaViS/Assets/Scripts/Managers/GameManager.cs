@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -21,6 +22,7 @@ public class GameManager : MonoBehaviour
     public bool playerCarriesObject = false;
     public Texture2D colorTexture;
     public Texture2D takenPicure;
+    public GameObject eric;
 
     void Awake()
     {
@@ -32,6 +34,7 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
         }
+        DontDestroyOnLoad(this.gameObject);
     }
 
     private void Start()
@@ -53,6 +56,13 @@ public class GameManager : MonoBehaviour
     public void ChangeSuspicousness(float suspicousness)
     {
         this.suspicousnessLevel += suspicousness;
-        Mathf.Clamp(suspicousnessLevel, 0, scoreDangerous);
+        suspicousnessLevel = Mathf.Clamp(suspicousnessLevel, 0, scoreDangerous);
+    }
+
+    public void RestartMission()
+    {
+        Application.Quit();
+        //Nice to have: restart the game
+        //SceneManager.LoadScene(0);
     }
 }

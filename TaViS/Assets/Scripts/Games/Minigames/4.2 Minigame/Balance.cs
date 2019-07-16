@@ -116,7 +116,8 @@ public class Balance : MiniGame
             StopCoroutine(timer);
             countdown.text = "";
         }
-        transform.Rotate(0, 0, trayRotation * Time.deltaTime); 
+        transform.Rotate(0, 0, trayRotation * Time.deltaTime);
+        
     }
 
     public void AdjustRotation(float newRotation)
@@ -126,12 +127,12 @@ public class Balance : MiniGame
 
     public void AdjustLeftRotation(float newRotation)
     {
-        trayRotation = newRotation;
+        trayRotation += newRotation;
     }
 
     public void AdjustRightRotation(float newRotation)
     {
-        trayRotation = -newRotation;
+        trayRotation -= newRotation;
     }
 
 }

@@ -27,6 +27,12 @@ public class DanceHighlight : MonoBehaviour
         {
             Debug.Log(" STOP - " + GameManager.Instance.MiniGameManager.currMiniGame.currentGesture.ToString());
             GameManager.Instance.GestureManager.StopDetecting();
+            if (!GameManager.Instance.GestureManager.hasDetected)
+            {
+                GestureEvaluationResult result = new GestureEvaluationResult(GameManager.Instance.MiniGameManager.currMiniGame.currentGesture, GestureEvaluationResult.GESTURE_PERFORMANCE.OK);
+                result.score = (int)GestureEvaluationResult.GESTURE_PERFORMANCE.BAD;
+                GameManager.Instance.MiniGameManager.TriggerGestureResult(result);
+            }
             GameManager.Instance.MiniGameManager.currMiniGame.OnGameNextStep();
         }
 

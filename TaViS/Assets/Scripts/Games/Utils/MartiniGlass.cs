@@ -7,7 +7,7 @@ public class MartiniGlass : PickableObject
     // Start is called before the first frame update
     void Start()
     {
-        
+        parentToTarget = true;
     }
 
     // Update is called once per frame

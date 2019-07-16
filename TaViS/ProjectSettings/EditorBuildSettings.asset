@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/KonstiTest.unity
+    guid: c7c43fba98fa8d74ba06c3fdd3b6b5db
   m_configObjects: {}

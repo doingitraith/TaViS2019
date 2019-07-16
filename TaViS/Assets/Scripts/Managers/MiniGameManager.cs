@@ -14,6 +14,8 @@ public class MiniGameManager : MonoBehaviour
 
     private bool isTransitioning;
     public Disguise disguise;
+    public TakePhoto takePhoto;
+    public RetakePhoto retakePhoto;
     private PlayerMovement playerMovement;
 
     // Start is called before the first frame update
@@ -21,7 +23,7 @@ public class MiniGameManager : MonoBehaviour
     {
         //InitMiniGames();
         isTransitioning = false;
-        playerMovement = FindObjectOfType<PlayerMovement>();
+        playerMovement = GameManager.Instance.eric.GetComponent<PlayerMovement>(); 
         SetupMiniGame(GameManager.Instance.CurrentGame);
     }
 
@@ -59,13 +61,14 @@ public class MiniGameManager : MonoBehaviour
         GameManager.Instance.ChangeScore(result.score);
         if(currMiniGame.Id.Equals(GameID.GAME_ID.TIP_HAT_DRINK) && (currMiniGame.currentGesture.Equals(GestureManager.GESTURENAME.TIP_HAT) || currMiniGame.currentGesture.Equals(GestureManager.GESTURENAME.DRINK)))
         {
-            GameManager.Instance.Ui.UpdateFeedbackTextGesture(result.performance, currMiniGame.currentGesture, null);
+            GameManager.Instance.Ui.UpdateFeedbackTextGesture(result.performance, currMiniGame.currentGesture, null, false);
         }
         else
         { 
-            GameManager.Instance.Ui.UpdateFeedbackTextGesture(result.performance, null, null);
+            GameManager.Instance.Ui.UpdateFeedbackTextGesture(result.performance, null, null, false);
         }
 
+        //Update Suspiciousness
         if (result.performance == GestureEvaluationResult.GESTURE_PERFORMANCE.BAD ||
             result.performance == GestureEvaluationResult.GESTURE_PERFORMANCE.INVALID)
             GameManager.Instance.ChangeSuspicousness(5.0f);
@@ -80,7 +83,6 @@ public class MiniGameManager : MonoBehaviour
             currMiniGame.OnGameNextStep();
 
         EndMiniGame();
-        // TODO: Present result
     }
 
     public void EndDisguise(bool isDisguised)
@@ -89,6 +91,7 @@ public class MiniGameManager : MonoBehaviour
         {
             Debug.Log("NOT DETECTED");
             currMiniGameIdx++;
+            GameManager.Instance.ChangeSuspicousness(-10);
             if (currMiniGameIdx < miniGames.Count)
             {
                 playerMovement.SetWalking(true, playerMovement.transform);
@@ -97,8 +100,8 @@ public class MiniGameManager : MonoBehaviour
         }
         else
         {
-            // TODO: What if the player is detected?
             currMiniGame.isFailed = true;
+            GameManager.Instance.Ui.EndGame();
             Debug.Log("DETECTED");
         }
     }
@@ -140,7 +143,10 @@ public class MiniGameManager : MonoBehaviour
         GameManager.Instance.CurrentGame = minigame;
         GameManager.Instance.GestureManager.LoadGameGestures(minigame);
         currMiniGame = miniGameObjects[currMiniGameIdx].GetComponent<MiniGame>();
-        GameManager.Instance.Ui.UpdateFeedbackTextGesture(null, null, minigame);
+        if (!minigame.Equals(GameID.GAME_ID.BALANCE_TABLET))
+        {
+            GameManager.Instance.Ui.UpdateFeedbackTextGesture(null, null, minigame, false);
+        }
         GameManager.Instance.GestureManager.StartDetecting();
         currMiniGame.OnGameStarted();
     }
@@ -148,6 +154,16 @@ public class MiniGameManager : MonoBehaviour
     public void GlassesDetected(DetectionResult glasses)
     {
         if (disguise.isDisguising)
+        {
             disguise.AddResult(glasses);
+        }
+        if(takePhoto.timerStarted)
+        {
+            takePhoto.AddResult(glasses);
+        }
+        if (retakePhoto.timerStarted)
+        {
+            retakePhoto.AddResult(glasses);
+        }
     }
 }

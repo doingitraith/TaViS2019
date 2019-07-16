@@ -57,6 +57,7 @@ public class Hands : MonoBehaviour
         //Debug.Log("Hand right: " + handRightUi.transform.position.y+", Hand left: "+ handLeftUi.transform.position.y);
         sliderLeft.value = handLeftUi.transform.position.y - Screen.height/2.0f;
         sliderRight.value = handRightUi.transform.position.y - Screen.height / 2.0f;
+        sliderRight.value *= (-1);
         //sliderLeft.value = handLeftUi.transform.position.y - 250;
         //sliderRight.value = handRightUi.transform.position.y - 250f;
     }

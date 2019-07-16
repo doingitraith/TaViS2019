@@ -11,10 +11,12 @@ public class MeetGuestsAtBar : MiniGame
     {
         Id = GameID.GAME_ID.TIP_HAT_DRINK;
     }
+
     public override void OnGameStarted()
     {
         base.OnGameStarted();
         //activate
+        GameManager.Instance.Ui.suspiciousnessParent.SetActive(true);
         GameManager.Instance.GestureManager.StopDetecting();
         Glass.GetComponentInChildren<Collider>().enabled = false;
         Hat.GetComponentInChildren<Collider>().enabled = true;

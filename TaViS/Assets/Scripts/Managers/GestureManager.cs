@@ -30,6 +30,7 @@ public class GestureManager : MonoBehaviour
     private int gesturePauseCount = 0;
 
     public bool isDetecting;
+    public bool hasDetected;
 
     //available gesture names for gamemanager,please keep updated
     public enum GESTURENAME
@@ -40,7 +41,6 @@ public class GestureManager : MonoBehaviour
         SWIPE_LEG,
         */
         TAKE_PHOTO,
-        RAISE_ARMS,
         DRINK,
         TIP_HAT,
         DANCE_RAISE_ARMS,
@@ -54,6 +54,9 @@ public class GestureManager : MonoBehaviour
         DANCE_HAM_RIGHT,
         DANCE_LEFT_LEG_Z,
         DANCE_RIGHT_LEG_Z,
+        DANCE_TPOSE,
+        DANCE_OUT_LEFT_LEG,
+        DANCE_OUT_RIGHT_LEG,
         END
     }
 
@@ -66,7 +69,7 @@ public class GestureManager : MonoBehaviour
         {
             case "tiphat": return GESTURENAME.TIP_HAT;
             case "drink": return GESTURENAME.DRINK;
-            default: return GESTURENAME.RAISE_ARMS;
+            default: return GESTURENAME.DRINK;
         }
     }
 
@@ -80,6 +83,7 @@ public class GestureManager : MonoBehaviour
         namesByGame = new Dictionary<GameID.GAME_ID, List<GESTURENAME>>();
         InitGameDictionary();
         InitNameDictionary();
+        hasDetected = false;
         //LoadGameGestures(currentGame);
         //currentGame = GameID.GAME_ID.START;
     }
@@ -141,19 +145,26 @@ public class GestureManager : MonoBehaviour
             case GESTURENAME.DANCE_HAM_RIGHT: output = GESTURENAME.DANCE_HAM_RIGHT.ToString(); break;
             case GESTURENAME.DANCE_LEFT_LEG_Z: output = GESTURENAME.DANCE_LEFT_LEG_Z.ToString(); break;
             case GESTURENAME.DANCE_RIGHT_LEG_Z: output = GESTURENAME.DANCE_RIGHT_LEG_Z.ToString(); break;
+            case GESTURENAME.DANCE_TPOSE: output = GESTURENAME.DANCE_TPOSE.ToString(); break;
+            case GESTURENAME.DANCE_OUT_LEFT_LEG: output = GESTURENAME.DANCE_OUT_LEFT_LEG.ToString(); break;
+            case GESTURENAME.DANCE_OUT_RIGHT_LEG: output = GESTURENAME.DANCE_OUT_RIGHT_LEG.ToString(); break;
 
             // END
             case GESTURENAME.END: output = GESTURENAME.END.ToString(); break;
 
             default: output = "UnknownGesture"; break;
         }
-        Debug.Log(output);
+        Debug.Log(output + " RECOGNIZED! " + "Pause: " + gesturePauseCount);
         //the gamelogic to perform --> minigame manager
+        Debug.Log("Current Gesture in on Recognized: " + GameManager.Instance.MiniGameManager.currMiniGame.currentGesture);
         if (e.GestureName.Equals(GameManager.Instance.MiniGameManager.currMiniGame.currentGesture))
         {
             //Debug.Log(output + " Recognized");
-            if(GameManager.Instance.MiniGameManager.currMiniGame.Id.Equals(GameID.GAME_ID.DANCE))
+            if (GameManager.Instance.MiniGameManager.currMiniGame.Id.Equals(GameID.GAME_ID.DANCE))
+            {
+                hasDetected = true;
                 StopDetecting();
+            }
 
             TriggerGestureResult(e.GestureName, false, null);
         }
@@ -182,16 +193,15 @@ public class GestureManager : MonoBehaviour
         IRelativeGestureSegment[] hamRight = { new HamRightSegment1(), new HamRightSegment2()};
         IRelativeGestureSegment[] LeftLegZ = { new LeftLegZSegment1(), new LeftLegZSegment2() };
         IRelativeGestureSegment[] RightLegZ = { new RightLegZSegment1(), new RightLegZSegment2() };
+        IRelativeGestureSegment[] OutLeftLeg = { new OutLeftLegSegment1(), new OutLeftLegSegment2() };
+        IRelativeGestureSegment[] OutRightLeg = { new OutRightLegSegment1(), new OutRightLegSegment2() };
+        IRelativeGestureSegment[] Tpose = { new TPoseSegment1() };
 
         gesturesByGame.Add(GameID.GAME_ID.DANCE, new List<Gesture> { new Gesture(GESTURENAME.DANCE_RAISE_ARMS, raiseArms),
                                                                      new Gesture(GESTURENAME.DANCE_WAVE_RIGHT_LEG, waveRightLeg),
                                                                      new Gesture(GESTURENAME.DANCE_WAVE_LEFT_LEG, waveLefttLeg),
                                                                      new Gesture(GESTURENAME.DANCE_DISCO_ARM_LEFT, discoArmLeft),
-                                                                     new Gesture(GESTURENAME.DANCE_DISCO_ARM_RIGHT, discoArmRight),
-                                                                     new Gesture(GESTURENAME.DANCE_HAM_LEFT, hamLeft),
-                                                                     new Gesture(GESTURENAME.DANCE_HAM_RIGHT, hamRight),
-                                                                     new Gesture(GESTURENAME.DANCE_LEFT_LEG_Z, LeftLegZ),
-                                                                     new Gesture(GESTURENAME.DANCE_RIGHT_LEG_Z, RightLegZ)
+                                                                     new Gesture(GESTURENAME.DANCE_DISCO_ARM_RIGHT, discoArmRight) 
                                                                     });
 
     }
@@ -212,13 +222,12 @@ public class GestureManager : MonoBehaviour
         namesByGame.Add(GameID.GAME_ID.DANCE, new List<GESTURENAME> {GESTURENAME.DANCE_RAISE_ARMS,
                                                                      GESTURENAME.DANCE_WAVE_RIGHT_LEG,
                                                                      GESTURENAME.DANCE_WAVE_LEFT_LEG,
-
                                                                      GESTURENAME.DANCE_DISCO_ARM_LEFT,
+                                                                     GESTURENAME.DANCE_RAISE_ARMS,
                                                                      GESTURENAME.DANCE_DISCO_ARM_RIGHT,
-                                                                     GESTURENAME.DANCE_HAM_LEFT,
-                                                                     GESTURENAME.DANCE_HAM_RIGHT,
-                                                                     GESTURENAME.DANCE_LEFT_LEG_Z,
-                                                                     GESTURENAME.DANCE_RIGHT_LEG_Z
+                                                                     GESTURENAME.DANCE_WAVE_LEFT_LEG,
+                                                                     GESTURENAME.DANCE_WAVE_RIGHT_LEG,
+                                                                     GESTURENAME.DANCE_RAISE_ARMS
                                                                      });
         //BALANCE
         namesByGame.Add(GameID.GAME_ID.BALANCE_TABLET, new List<GESTURENAME> {GESTURENAME.BALANCE});
@@ -270,7 +279,7 @@ public class GestureManager : MonoBehaviour
                 performance = GestureEvaluationResult.GESTURE_PERFORMANCE.PERFECT;
             }
 
-            //Debug.Log("Performance from Pause Events: " + performance.ToString() + " Pause: " + gesturePauseCount);
+            Debug.Log("Performance from Pause Events: " + performance.ToString() + " Pause: " + gesturePauseCount);
             gesturePauseCount = 0;
         }
         else
@@ -322,7 +331,14 @@ public class GestureManager : MonoBehaviour
         // TODO: set difficulties
         switch (result.gestureName)
         {
-            case GESTURENAME.DRINK: difficultyMod = 2; break;
+            case GESTURENAME.DANCE_DISCO_ARM_LEFT: difficultyMod = 3; break;
+            case GESTURENAME.DANCE_DISCO_ARM_RIGHT: difficultyMod = 3; break;
+            case GESTURENAME.DANCE_WAVE_LEFT_LEG: difficultyMod = 2; break;
+            case GESTURENAME.DANCE_WAVE_RIGHT_LEG: difficultyMod = 2; break;
+            case GESTURENAME.DANCE_HAM_LEFT: difficultyMod = 2; break;
+            case GESTURENAME.DANCE_HAM_RIGHT: difficultyMod = 2; break;
+            case GESTURENAME.DANCE_OUT_LEFT_LEG: difficultyMod = 2; break;
+            case GESTURENAME.DANCE_OUT_RIGHT_LEG: difficultyMod = 2; break;
             default: break;
         }
 
@@ -333,6 +349,8 @@ public class GestureManager : MonoBehaviour
     {
         gc.GestureRecognizedInController += OnGestureRecognized;
         isDetecting = true;
+        hasDetected = false;
+        gesturePauseCount = 0;
     }
 
     public void StopDetecting()
@@ -340,4 +358,13 @@ public class GestureManager : MonoBehaviour
         gc.GestureRecognizedInController -= OnGestureRecognized;
         isDetecting = false;
     }
+
+    private void Update()
+    {
+        if (currentGame.Equals(GameID.GAME_ID.DANCE))
+        {
+            Debug.Log("Current Gesture: " + GameManager.Instance.MiniGameManager.currMiniGame.currentGesture.ToString());
+        }
+    }
+
 }

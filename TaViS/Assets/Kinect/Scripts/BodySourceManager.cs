@@ -43,7 +43,7 @@ public class BodySourceManager : MonoBehaviour
             FrameDescription colorFrameDescription = _sensor.ColorFrameSource.CreateFrameDescription(ColorImageFormat.Rgba);
             colorData = new byte[colorFrameDescription.BytesPerPixel * colorFrameDescription.LengthInPixels];
             GameManager.Instance.colorTexture = new Texture2D(colorFrameDescription.Width,
-                colorFrameDescription.Height,TextureFormat.RGBA32, false);
+                colorFrameDescription.Height, TextureFormat.RGBA32, false);
 
             if (!_sensor.IsOpen)
             {

@@ -12,7 +12,7 @@ public class AppleCounter : MonoBehaviour
         if (col.gameObject.tag == "apple")
         {
             counter--;
-            
+            GetComponent<AudioSource>().Play();
             Debug.Log("apple detected");
         }
     }

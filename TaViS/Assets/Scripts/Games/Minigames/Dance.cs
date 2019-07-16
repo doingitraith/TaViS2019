@@ -35,7 +35,7 @@ public class Dance : MiniGame
 
         DanceUI.gameObject.SetActive(true);
         Debug.Log("Game started: " + GameName);
-        Debug.Log("Current gesture: " + currentGesture);
+        //Debug.Log("Current gesture: " + currentGesture);
         moveImages = GameObject.Find("MoveImages").gameObject;
         texts = moveImages.GetComponentsInChildren<Text>();
         images = moveImages.GetComponentsInChildren<Image>();
@@ -43,7 +43,7 @@ public class Dance : MiniGame
         for (int i = 0; i < GestureNames.Count; i++)
         {
             texts[texts.Length-1-i].text = GestureNames[i].ToString();
-            images[images.Length-1-i].sprite = moveSprites[i];
+            //images[images.Length-1-i].sprite = moveSprites[i];
         }
 
         // Randomize MoveList
@@ -97,6 +97,7 @@ public class Dance : MiniGame
         base.OnGameFinished();
         DanceUI.gameObject.SetActive(false);
         Debug.Log("Game finished: " + GameName);
+        GameManager.Instance.Ui.UpdateFeedbackTextGesture(null, null, GameID.GAME_ID.BALANCE_TABLET, false);
         GameManager.Instance.MiniGameManager.EndMiniGame();
     }
 

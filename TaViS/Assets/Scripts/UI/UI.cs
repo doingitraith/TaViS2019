@@ -18,6 +18,7 @@ public class UI : MonoBehaviour
     float fade = .7f;
     float fadeOut = 2f;
     float pause = 5f;
+    float pauseLose = 8f;
     float timePerLetter = 0.012f;
     bool textBuild;
     public Color colorPerfect = Color.green;
@@ -25,13 +26,15 @@ public class UI : MonoBehaviour
     public Color colorGood = Color.cyan;
     public Color colorOk;
     public Color colorBad = Color.red;
+    public GameObject looseScreen;
 
     private void Start()
     {
         feedBack = GameObject.Find("Feedback").GetComponent<Text>();
         FeedbackBackground = GameObject.Find("FeedbackBackground").GetComponent<Image>();
         feedBackText = "";
-        textBuild = true;
+        textBuild = false;
+        suspicousness.text = "";
     }
 
     private void FixedUpdate()
@@ -50,7 +53,6 @@ public class UI : MonoBehaviour
     public void UpdateSuspiciousness()
     {
         float suspiciousnessValue = GameManager.Instance.suspicousnessLevel;
-
         if(suspiciousnessValue >= GameManager.Instance.scoreDangerous)
             suspicousness.text = "The Guards are onto you!";
         else if (suspiciousnessValue >= GameManager.Instance.scoreSuspicous)
@@ -68,13 +70,20 @@ public class UI : MonoBehaviour
     }
 
     //Call on GestureFinish or GameFinish : set performance and gesturename null for flavor text, or set gameId null and the others not for gesture feedback
-    public void UpdateFeedbackTextGesture(Nullable<GestureEvaluationResult.GESTURE_PERFORMANCE> performance, Nullable<GestureManager.GESTURENAME> gestureName, Nullable<GameID.GAME_ID> gameId)
+    public void UpdateFeedbackTextGesture(Nullable<GestureEvaluationResult.GESTURE_PERFORMANCE> performance, Nullable<GestureManager.GESTURENAME> gestureName, Nullable<GameID.GAME_ID> gameId, bool glassesTest)
     {
         //StopCoroutine("LetterByLetter");
         if(performance.Equals(GestureEvaluationResult.GESTURE_PERFORMANCE.NONE))
         {
             return;
         }
+
+        if (textBuild)
+        {
+            StopAllCoroutines();
+        }
+
+        textBuild = true;
 
         feedBack.text = "";
         feedBackText = "";
@@ -89,6 +98,7 @@ public class UI : MonoBehaviour
             {
                 case GameID.GAME_ID.START: feedBackText = "Welcome to PLACE agent, melting pot of dealers and gangsters of all kind.\nLogic, instinct and discretion are your most reknown qualities as we have been informed.\nYour target of this mission is on the stage.\nFollow your intuition and don't draw the guard's attention.\nJust blend in with the guests and follow my instructions. First you need to pass an ID check.\nGood luck in there agent."; break;
                 case GameID.GAME_ID.TIP_HAT_DRINK: feedBackText = "We see you have taken the place of the bartender. Outstanding move!\nIt is customary to greet your guests before serving them.\nBut of course you know that.\nJust tip your hat."; break;
+                case GameID.GAME_ID.BALANCE_TABLET: feedBackText = "Refreshments are being served after the dance.\nSee to it that the guests receive their amuse-gueule\nDon't let them drop."; break;
                 case GameID.GAME_ID.END: feedBackText = "This is it agent. We never doubted your skills. Bravo!\nNow you can safely secure the target. Good job agent and thanks for your time."; break;
                 default: eric.textPlaying = false; return;
             }
@@ -115,26 +125,36 @@ public class UI : MonoBehaviour
                     default: break;
                 }
             }
+
+        }
+        if (glassesTest)
+        {
+            if (GameManager.Instance.isWearingGlasses)
+            {
+                feedBackText = "Good idea to wear the tactical glasses"; background = colorOk;
+            }
+            else
+            {
+                feedBackText = "No tactical glasses today agent?"; background = colorOk;
+            }
         }
         feedBack.text = "";
-
         ComputePauseDuration();
         StartCoroutine(LetterByLetter(background));
-
     }
 
-    IEnumerator FadeIn(Color color)
+    IEnumerator FadeIn(Image image, Color color)
     {
         for (float i = 0.01f; i < fade; i += Time.deltaTime)
         {
-            FeedbackBackground.color = Color.Lerp(Color.clear, color, i / fade);
+            image.color = Color.Lerp(Color.clear, color, i / fade);
             yield return null;
         }
     }
 
     IEnumerator LetterByLetter(Color color)
     {
-        StartCoroutine(FadeIn(color));
+        StartCoroutine(FadeIn(FeedbackBackground, color));
         //LetterbyLetter
         foreach (char letter in feedBackText)
         {
@@ -172,5 +192,33 @@ public class UI : MonoBehaviour
         pause = 0.0f;
         pause = timePerLetter * feedBackText.Length;
         //Debug.Log("pause: " + pause);
+    }
+
+    public void EndGame()
+    {
+        StartCoroutine(LoseScreen());
+    }
+
+    public IEnumerator LoseScreen()
+    {
+        StartCoroutine(FadeIn(looseScreen.GetComponentInChildren<Image>(), Color.black));
+        //show score
+        UpdateScore();
+        score.gameObject.SetActive(true);
+        score.gameObject.transform.position = new Vector3(Screen.width * 0.5f, score.gameObject.transform.position.y, 0);
+        foreach (Text t in looseScreen.GetComponentsInChildren<Text>())
+            t.enabled = true;
+        //WaitBeforeFadeOut
+        for (float i = 0; i < pause; i += Time.deltaTime)
+        {
+            yield return null;
+        }
+        //Wait for GameRestart
+        for (float i = 0; i < pauseLose; i += Time.deltaTime)
+        {
+            yield return null;
+        }
+        GameManager.Instance.RestartMission();
+        yield return null;
     }
 }

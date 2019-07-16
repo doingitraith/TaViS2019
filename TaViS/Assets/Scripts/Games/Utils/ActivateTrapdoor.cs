@@ -29,8 +29,10 @@ public class ActivateTrapdoor : MonoBehaviour
         if (other.tag.Equals("Hand"))
         {
             trapdoor.SetActive(true);
+            GetComponent<Collider>().enabled = false;
             StartCoroutine("Falling");
         }
+        GetComponent<AudioSource>().Play();
     }
 
     IEnumerator Falling()

@@ -8,11 +8,16 @@ public class Checkpoint : MonoBehaviour
     private string id;
     CheckpointManager cm;
     public Transform target;
+    AudioSource audioSource;
+    bool shouldDisable;
+    bool startAudio;
 
     private void Start()
     {
         cm = GameObject.Find("CheckpointManager").GetComponent<CheckpointManager>();
         id = gameObject.name;
+        audioSource = GetComponent<AudioSource>();
+        shouldDisable = false;
     }
 
     private void Update()
@@ -21,6 +26,14 @@ public class Checkpoint : MonoBehaviour
         {
             transform.position = target.position;
             transform.parent = target;
+        }
+
+        if (startAudio)
+        {
+            if (!audioSource.isPlaying)
+            {
+                gameObject.SetActive(false);
+            }
         }
     }
 
@@ -34,7 +47,7 @@ public class Checkpoint : MonoBehaviour
                 Debug.Log("Checkpoint 0");
                 cm.SetFirst(other.gameObject);
                 cm.IncreaseScore();
-                gameObject.SetActive(false);
+                StartCoroutine(PlaySound());
                 cm.RestartTimer();
                 if(GameManager.Instance.MiniGameManager.currMiniGame.currentGesture == GestureManager.GESTURENAME.TIP_HAT)
                 {
@@ -61,11 +74,11 @@ public class Checkpoint : MonoBehaviour
                     {
                         case "1":   cm.SetMiddle();
                                     cm.IncreaseScore();
-                                    gameObject.SetActive(false);
+                                    StartCoroutine(PlaySound());
                                     break;
                         case "2":   cm.SetLast();
                                     cm.IncreaseScore();
-                                    gameObject.SetActive(false);
+                                    StartCoroutine(PlaySound());
                                     break;
                     }
                     Debug.Log("Checkpoint " + id);
@@ -89,5 +102,11 @@ public class Checkpoint : MonoBehaviour
                 }
             }
         }
+    }
+    IEnumerator PlaySound()
+    {
+        startAudio = true;
+        audioSource.Play();
+        yield return null;
     }
 }

@@ -136,10 +136,10 @@ public class CheckpointManager : MonoBehaviour
         }
 
         if (first && middle && timeout) {
-            performance = GestureEvaluationResult.GESTURE_PERFORMANCE.GOOD;
+            performance = GestureEvaluationResult.GESTURE_PERFORMANCE.VERY_GOOD;
         }
         else if (first && timeout) {
-            performance = GestureEvaluationResult.GESTURE_PERFORMANCE.OK;
+            performance = GestureEvaluationResult.GESTURE_PERFORMANCE.BAD;
         }
         else if(first && middle && last)
         {
@@ -147,7 +147,7 @@ public class CheckpointManager : MonoBehaviour
         }
         else if (first && last)
         {
-            performance = GestureEvaluationResult.GESTURE_PERFORMANCE.VERY_GOOD;
+            performance = GestureEvaluationResult.GESTURE_PERFORMANCE.GOOD;
         }
         GestureEvaluationResult result = new GestureEvaluationResult(GameManager.Instance.MiniGameManager.currMiniGame.currentGesture, performance);
         result.score = score;
