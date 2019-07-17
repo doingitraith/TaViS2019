@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+//handles suspiciousness bar, feedback texts
 public class UI : MonoBehaviour
 {
     public UnityEricController eric;
@@ -39,6 +39,7 @@ public class UI : MonoBehaviour
 
     private void FixedUpdate()
     {
+        //Debug
         if (Input.GetKeyDown(KeyCode.L))
         {
             GameManager.Instance.ChangeSuspicousness(5);
@@ -47,9 +48,11 @@ public class UI : MonoBehaviour
         {
             GameManager.Instance.ChangeSuspicousness(-5);
         }
+
         UpdateScore();
         UpdateSuspiciousness();
     }
+
     public void UpdateSuspiciousness()
     {
         float suspiciousnessValue = GameManager.Instance.suspicousnessLevel;
@@ -59,7 +62,7 @@ public class UI : MonoBehaviour
             suspicousness.text = "The Guards are suspicous";
         else
             suspicousness.text = "The Guards suspect nothing";
-
+        //update bar
         EyeFill.fillAmount = suspiciousnessValue / GameManager.Instance.scoreDangerous;
     }
 
@@ -69,7 +72,7 @@ public class UI : MonoBehaviour
         score.text = "Score: " + scoreValue;
     }
 
-    //Call on GestureFinish or GameFinish : set performance and gesturename null for flavor text, or set gameId null and the others not for gesture feedback
+    //Call on GestureFinish or GameFinish : set performance and gesturename null for flavor text, or set gameId null and the others not for gesture feedback, glassesTest is ONLY true for TakePhoto and RetakePhoto and false otherwise
     public void UpdateFeedbackTextGesture(Nullable<GestureEvaluationResult.GESTURE_PERFORMANCE> performance, Nullable<GestureManager.GESTURENAME> gestureName, Nullable<GameID.GAME_ID> gameId, bool glassesTest)
     {
         //StopCoroutine("LetterByLetter");
@@ -90,6 +93,7 @@ public class UI : MonoBehaviour
         feedBack.color = Color.white;
         Color background = colorOk;
         feedBack.alignment = TextAnchor.UpperLeft;
+        //Texts between games
         if (gameId != null)
         {
             eric.textPlaying = true;
@@ -98,11 +102,12 @@ public class UI : MonoBehaviour
             {
                 case GameID.GAME_ID.START: feedBackText = "Welcome to PLACE agent, melting pot of dealers and gangsters of all kind.\nLogic, instinct and discretion are your most reknown qualities as we have been informed.\nYour target of this mission is on the stage.\nFollow your intuition and don't draw the guard's attention.\nJust blend in with the guests and follow my instructions. First you need to pass an ID check.\nGood luck in there agent."; break;
                 case GameID.GAME_ID.TIP_HAT_DRINK: feedBackText = "We see you have taken the place of the bartender. Outstanding move!\nIt is customary to greet your guests before serving them.\nBut of course you know that.\nJust tip your hat."; break;
-                case GameID.GAME_ID.BALANCE_TABLET: feedBackText = "Refreshments are being served after the dance.\nSee to it that the guests receive their amuse-gueule\nDon't let them drop."; break;
+                case GameID.GAME_ID.BALANCE_TABLET: feedBackText = "Refreshments are being served after the dance.\nDon't let the apples drop."; break;
                 case GameID.GAME_ID.END: feedBackText = "This is it agent. We never doubted your skills. Bravo!\nNow you can safely secure the target. Good job agent and thanks for your time."; break;
                 default: eric.textPlaying = false; return;
             }
         }
+        //Performance commentary
         if (performance != null)
         {
             feedBackText = "";
@@ -116,6 +121,7 @@ public class UI : MonoBehaviour
                 case GestureEvaluationResult.GESTURE_PERFORMANCE.PERFECT: feedBackText = "Excellent, you are truly inconspicuous!"; background = colorPerfect; break;
                 default: break;
             }
+            //in Meet guests: instruction what to do next
             if (gestureName != null)
             {
                 switch (gestureName)
@@ -127,6 +133,7 @@ public class UI : MonoBehaviour
             }
 
         }
+        //only for start game glasses check
         if (glassesTest)
         {
             if (GameManager.Instance.isWearingGlasses)
@@ -187,6 +194,7 @@ public class UI : MonoBehaviour
         eric.textPlaying = false;
     }
 
+    //text remains for an amount of time depending on text length
     void ComputePauseDuration()
     {
         pause = 0.0f;

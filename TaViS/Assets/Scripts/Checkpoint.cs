@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//used in TipHat and Drink
 public class Checkpoint : MonoBehaviour
 {
     public string bodyPartTag = "Hand";
@@ -65,7 +66,7 @@ public class Checkpoint : MonoBehaviour
                     }
                 }
             }
-            // must be the exact same bodypart e.g left hand not right hand from start to finish
+            // must be the exact same bodypart that has touched the first checkpoint e.g left hand not right hand from start to finish
             else if (cm != null && cm.GetActor() != null && other.gameObject.Equals(cm.GetActor()))
             {
                 if (cm.GetFirst())
@@ -86,7 +87,7 @@ public class Checkpoint : MonoBehaviour
             }
         }
     }
-
+    //used for INVALID checkpoint, if players is movement is way off he gets a score penalty
     private void OnTriggerExit(Collider other)
     {
         if (cm.GetFirst())

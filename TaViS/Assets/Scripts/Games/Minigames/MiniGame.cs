@@ -47,6 +47,7 @@ public abstract class MiniGame : MonoBehaviour
         if (currentStep < GestureNames.Count)
         {
             currentGesture = GestureNames[currentStep];
+            //used for Meet guests
             if (hasCheckpoints)
             {
                 GameManager.Instance.CheckpointManager.LoadCheckPoints();
@@ -73,6 +74,7 @@ public abstract class MiniGame : MonoBehaviour
     }
     public abstract void ResetGame();
 
+    //activate correct checkpoints, used for meet guests
     protected void ToggleChildrenActivation(GameObject checkpoints, bool enabled)
     {
         checkpoints.SetActive(enabled);

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+//Central of the game, stores all managers and is always accessible
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
@@ -59,6 +60,7 @@ public class GameManager : MonoBehaviour
         suspicousnessLevel = Mathf.Clamp(suspicousnessLevel, 0, scoreDangerous);
     }
 
+    //Ends the game
     public void RestartMission()
     {
         Application.Quit();

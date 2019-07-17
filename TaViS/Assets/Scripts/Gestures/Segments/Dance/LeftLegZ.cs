@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Windows.Kinect;
 
+//not stable enough, not used in game
 public class LeftLegZSegment1 : IRelativeGestureSegment
 {
     /// <summary>
@@ -29,12 +30,9 @@ public class LeftLegZSegment1 : IRelativeGestureSegment
             {
                 return GesturePartResult.Succeed;
             }
-
-            // foot has not dropped but is not quite where we expect it to be, pausing till next frame
             return GesturePartResult.Pausing;
         }
 
-        // foot dropped - no gesture fails
         return GesturePartResult.Fail;
     }
 }
@@ -66,11 +64,8 @@ public class LeftLegZSegment2 : IRelativeGestureSegment
                 return GesturePartResult.Succeed;
             }
 
-            // foot has not dropped but is not quite where we expect it to be, pausing till next frame
             return GesturePartResult.Pausing;
         }
-
-        // foot dropped - no gesture fails
         return GesturePartResult.Fail;
     }
 }

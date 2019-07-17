@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//stores all game ids
 public static class GameID
 {
     public enum GAME_ID

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//used in Tiphat and Drink to give performance results
 public class CheckpointManager : MonoBehaviour
 {
     float startTimeValue = 10f;
@@ -31,7 +32,6 @@ public class CheckpointManager : MonoBehaviour
     void Start()
     {
         countdown = GameObject.Find("Countdown").GetComponent<Text>();
-        //LoadCheckPoints();
     }
 
     // Update is called once per frame
@@ -44,12 +44,14 @@ public class CheckpointManager : MonoBehaviour
                 InvokeRepeating("Countdown", 1.0f, 1.0f);
                 startTimer = false;
             }
+            //last checkpoint always triggers a result since the motion should be finished here
             if (last)
             {
                 CancelInvoke("Countdown");
                 countdown.text = "";
                 GestureEvaluationResult result = ComputeResult();
                 last = false;
+                //send result to minigamemanager
                 GameManager.Instance.MiniGameManager.TriggerGestureResult(result);
             }
         }
@@ -64,6 +66,7 @@ public class CheckpointManager : MonoBehaviour
             timeout = true;
             score -= timeoutPenalty;
             GestureEvaluationResult result = ComputeResult();
+            //send result to minigamemanager
             GameManager.Instance.MiniGameManager.TriggerGestureResult(result);
         }
         else
@@ -79,14 +82,15 @@ public class CheckpointManager : MonoBehaviour
         countdown.text = "" + time;
     }
 
-    //Call on MiniGame Start
+    //Call on MiniGame Start, initializes checkpoint system
     public void LoadCheckPoints()
     {
         noList = first = middle = last = invalid = timeout = false;
         score = 0;
-        //RestartTimer();
+
         if(checkpointParent != null)
         {
+            //activate all checkpoints of current gesture
             foreach(Transform child in checkpointParent)
             {
                 child.gameObject.SetActive(false);
@@ -127,6 +131,7 @@ public class CheckpointManager : MonoBehaviour
         invalid = true;
     }
 
+    //Evaluation
     GestureEvaluationResult ComputeResult()
     {
         GestureEvaluationResult.GESTURE_PERFORMANCE performance = GestureEvaluationResult.GESTURE_PERFORMANCE.BAD;

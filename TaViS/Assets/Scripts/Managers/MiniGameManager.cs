@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Windows.Kinect;
 
+//controls minigame progression
 public class MiniGameManager : MonoBehaviour
 {
     private int currMiniGameIdx = 0;
@@ -50,6 +51,7 @@ public class MiniGameManager : MonoBehaviour
     }
     */
 
+    //reacts to the results received from the games
     public void TriggerGestureResult(GestureEvaluationResult result)
     {
         //handle score, trigger event with name...
@@ -59,16 +61,19 @@ public class MiniGameManager : MonoBehaviour
         GameManager.Instance.GestureManager.StopDetecting();
 
         GameManager.Instance.ChangeScore(result.score);
+
+        //Give Feedback between guestures (with instruction for next guesture)...
         if(currMiniGame.Id.Equals(GameID.GAME_ID.TIP_HAT_DRINK) && (currMiniGame.currentGesture.Equals(GestureManager.GESTURENAME.TIP_HAT) || currMiniGame.currentGesture.Equals(GestureManager.GESTURENAME.DRINK)))
         {
             GameManager.Instance.Ui.UpdateFeedbackTextGesture(result.performance, currMiniGame.currentGesture, null, false);
         }
+        //...or just the feedback
         else
         { 
             GameManager.Instance.Ui.UpdateFeedbackTextGesture(result.performance, null, null, false);
         }
 
-        //Update Suspiciousness
+        //Update Suspiciousness, might need some tweaking
         if (result.performance == GestureEvaluationResult.GESTURE_PERFORMANCE.BAD ||
             result.performance == GestureEvaluationResult.GESTURE_PERFORMANCE.INVALID)
             GameManager.Instance.ChangeSuspicousness(5.0f);
@@ -85,8 +90,10 @@ public class MiniGameManager : MonoBehaviour
         EndMiniGame();
     }
 
+    //handles disguise result
     public void EndDisguise(bool isDisguised)
     {
+        //player has avoided the guards, game continues
         if (isDisguised)
         {
             Debug.Log("NOT DETECTED");
@@ -98,6 +105,7 @@ public class MiniGameManager : MonoBehaviour
                 isTransitioning = true;
             }
         }
+        //guards caught player, game over
         else
         {
             currMiniGame.isFailed = true;
@@ -139,7 +147,6 @@ public class MiniGameManager : MonoBehaviour
 
     public void SetupMiniGame(GameID.GAME_ID minigame)
     {
-        //do stuff
         GameManager.Instance.CurrentGame = minigame;
         GameManager.Instance.GestureManager.LoadGameGestures(minigame);
         currMiniGame = miniGameObjects[currMiniGameIdx].GetComponent<MiniGame>();
@@ -151,6 +158,7 @@ public class MiniGameManager : MonoBehaviour
         currMiniGame.OnGameStarted();
     }
 
+    //updates detection results for glasses
     public void GlassesDetected(DetectionResult glasses)
     {
         if (disguise.isDisguising)

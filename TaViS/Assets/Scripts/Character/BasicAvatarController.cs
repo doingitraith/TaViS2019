@@ -81,10 +81,12 @@ public class BasicAvatarController : MonoBehaviour
     // Update rotation of all known joints
     public virtual void Update()
     {
+        //Debug
         if (Input.GetKeyDown(KeyCode.A))
         {
             SetWalking(!walking);
         }
+        //withdraw kinect input while the player is walking (and play animation instead in PlayerMovement)
         if (textPlaying)
         {
             if (walking)
@@ -103,6 +105,7 @@ public class BasicAvatarController : MonoBehaviour
         }
     }
 
+    //Toggles walking, plays footstep sounds
     public void SetWalking(bool walking)
     {
         if (walking)

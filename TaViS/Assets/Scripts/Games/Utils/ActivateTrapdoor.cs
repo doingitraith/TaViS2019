@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//used in Finale
 public class ActivateTrapdoor : MonoBehaviour
 {
     public GameObject trapdoor;
@@ -16,12 +17,6 @@ public class ActivateTrapdoor : MonoBehaviour
     void Start()
     {
         hasTargetFallen = false;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     private void OnTriggerEnter(Collider other)

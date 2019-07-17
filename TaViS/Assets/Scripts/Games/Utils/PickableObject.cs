@@ -46,6 +46,7 @@ public abstract class PickableObject : MonoBehaviour
         }
     }
 
+    //parents the object to hand of player
     private void OnTriggerEnter(Collider other)
     {
         if (GameManager.Instance.CurrentGame.Equals(GameID.GAME_ID.TIP_HAT_DRINK))
@@ -78,6 +79,7 @@ public abstract class PickableObject : MonoBehaviour
         }
     }
 
+    //places the object at the desired location with correct orientation
     protected void OnTargetObjectReached()
     {
         float t = timeElapsed / autoMoveSpeed;

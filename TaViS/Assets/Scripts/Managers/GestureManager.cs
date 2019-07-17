@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//handles all gestures that are defined as in the exercise, stores all gesture names
 public class GestureManager : MonoBehaviour
 {
     public int scoreThresholdBad = 2150;
@@ -59,7 +60,7 @@ public class GestureManager : MonoBehaviour
         DANCE_OUT_RIGHT_LEG,
         END
     }
-
+    //used for machine learning, to parse the recordings' titles
     public GESTURENAME ConvertStringToGestureName(string gestureID)
     {
         gestureID = gestureID.Replace(" ", "");
@@ -88,6 +89,7 @@ public class GestureManager : MonoBehaviour
         //currentGame = GameID.GAME_ID.START;
     }
 
+    //Loads the guestures of the current game
     public void LoadGameGestures(GameID.GAME_ID newGameID)
     {
         currentGame = newGameID;
@@ -123,6 +125,8 @@ public class GestureManager : MonoBehaviour
             Debug.Log("No Gestures Found, please add to the dictionary");
         }
     }
+
+    //Triggered if a guesture has been recognized
     void OnGestureRecognized(object sender, GestureEventArgs e)
     {
         string output = "";
@@ -156,10 +160,12 @@ public class GestureManager : MonoBehaviour
         }
         Debug.Log(output + " RECOGNIZED! " + "Pause: " + gesturePauseCount);
         //the gamelogic to perform --> minigame manager
-        Debug.Log("Current Gesture in on Recognized: " + GameManager.Instance.MiniGameManager.currMiniGame.currentGesture);
+        //Debug.Log("Current Gesture in on Recognized: " + GameManager.Instance.MiniGameManager.currMiniGame.currentGesture);
         if (e.GestureName.Equals(GameManager.Instance.MiniGameManager.currMiniGame.currentGesture))
         {
             //Debug.Log(output + " Recognized");
+
+            //pause the detection to avoid repeated results, short pause between dance moves
             if (GameManager.Instance.MiniGameManager.currMiniGame.Id.Equals(GameID.GAME_ID.DANCE))
             {
                 hasDetected = true;
@@ -210,7 +216,7 @@ public class GestureManager : MonoBehaviour
     {
         //gc.GestureRecognizedInController += OnGestureRecognized;
 
-        //TAKE PHOT
+        //TAKE PHOTO
         namesByGame.Add(GameID.GAME_ID.START, new List<GESTURENAME> {GESTURENAME.TAKE_PHOTO});
 
         //MEET GUESTS
@@ -235,11 +241,13 @@ public class GestureManager : MonoBehaviour
         namesByGame.Add(GameID.GAME_ID.END, new List<GESTURENAME> { GESTURENAME.END });
     }
 
+    //evaluation depending on whether gesture has been detected by normal or by the machine learning system (confidence)
     void TriggerGestureResult(GESTURENAME recognizedGesture, bool resultFromConfidence, Nullable<float> confidence)
     {
         if (recognizedGesture == GameManager.Instance.MiniGameManager.currMiniGame.currentGesture)
         {
             GestureEvaluationResult result;
+            //this will always be true since the machine learning is disabled
             if (!resultFromConfidence)
             {
                 result = GetPointsFromEvaluation(recognizedGesture, false, null);
@@ -253,6 +261,7 @@ public class GestureManager : MonoBehaviour
         }
     }
 
+    //Performance influences guards suspiciousness
     GestureEvaluationResult GetPointsFromEvaluation(GESTURENAME recognizedGesture, bool useConfidence, Nullable<float> confidence)
     {
         GestureEvaluationResult.GESTURE_PERFORMANCE performance = GestureEvaluationResult.GESTURE_PERFORMANCE.INVALID;
@@ -282,6 +291,7 @@ public class GestureManager : MonoBehaviour
             Debug.Log("Performance from Pause Events: " + performance.ToString() + " Pause: " + gesturePauseCount);
             gesturePauseCount = 0;
         }
+        //for machine learning
         else
         {
             if (confidence <= confidenceThresholdPerfect)
@@ -309,6 +319,7 @@ public class GestureManager : MonoBehaviour
         return new GestureEvaluationResult(recognizedGesture, performance);
     }
 
+    //machine learning has thrown result
     public void VisualBuilderGestureRecognized(GESTURENAME name, float confidence)
     {
         if (!currentGestureNames.Contains(name) || !isDetecting)
@@ -324,11 +335,11 @@ public class GestureManager : MonoBehaviour
         gesturePauseCount++;
     }
 
+    //possibility to set up high risk high reward for guestures, at the moment only for dance moves
     int GetFinalGestureEvaluationResult(GestureEvaluationResult result)
     {
         int difficultyMod = 1;
         //set the difficulty of your gestures here!
-        // TODO: set difficulties
         switch (result.gestureName)
         {
             case GESTURENAME.DANCE_DISCO_ARM_LEFT: difficultyMod = 3; break;
@@ -358,13 +369,4 @@ public class GestureManager : MonoBehaviour
         gc.GestureRecognizedInController -= OnGestureRecognized;
         isDetecting = false;
     }
-
-    private void Update()
-    {
-        if (currentGame.Equals(GameID.GAME_ID.DANCE))
-        {
-            Debug.Log("Current Gesture: " + GameManager.Instance.MiniGameManager.currMiniGame.currentGesture.ToString());
-        }
-    }
-
 }

@@ -2,6 +2,7 @@
 using System.Collections;
 using Windows.Kinect;
 
+//setup kinect input for player model
 public class UnityEricController : BasicAvatarController
 {
     public override void Start()

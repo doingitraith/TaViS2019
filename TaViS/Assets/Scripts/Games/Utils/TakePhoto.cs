@@ -44,6 +44,7 @@ public class TakePhoto : MonoBehaviour
             timerSeconds--;
             yield return new WaitForSeconds(1.0f);
         }
+
         CheckForGlasses();
 
         timerSeconds = 3;
@@ -77,12 +78,12 @@ public class TakePhoto : MonoBehaviour
             }
         }
     }
-
+    //called by minigamemanager
     public void AddResult(DetectionResult glasses)
     {
         glassesResults.Add(glasses);
     }
-
+    //sets isWearingGlasses in Gamemanager for Disguise game
     public void CheckForGlasses()
     {
         if (glassesResults.Count > 0)
@@ -102,6 +103,7 @@ public class TakePhoto : MonoBehaviour
                 GameManager.Instance.isWearingGlasses = true;
 
             GameManager.Instance.Ui.UpdateFeedbackTextGesture(null, null, null, true);
+            //we need to clear to avoid false positives/negatives from previous executions
             glassesResults.Clear();
         }
     }

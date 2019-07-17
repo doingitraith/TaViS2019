@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//All camera steering functionality, Camera is parented to player model
 public class CameraUtils : MonoBehaviour
 {
     bool shouldMirrorCamera = false;
@@ -94,6 +95,7 @@ public class CameraUtils : MonoBehaviour
         }
     }
 
+    //Camera transition from third to first person (not used in final game)
     void GoToHeadPos()
     {
         Vector3 end = new Vector3(head.transform.position.x, head.transform.position.y + firstPersonOffset, head.transform.position.z);
@@ -148,6 +150,7 @@ public class CameraUtils : MonoBehaviour
         }
     }
 
+    //Mirrors camera view so that e.g the players left hand is steering the left hand of the model (seen by the player)
     public void MirrorCamera(bool shouldMirrorCamera)
     {
         if (shouldMirrorCamera)

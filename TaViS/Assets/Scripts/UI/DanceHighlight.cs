@@ -9,24 +9,14 @@ public class DanceHighlight : MonoBehaviour
 
     bool isFirstMove = true;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void OnTriggerEnter2D(Collider2D collider)
     {
         if (!isFirstMove)
         {
-            Debug.Log(" STOP - " + GameManager.Instance.MiniGameManager.currMiniGame.currentGesture.ToString());
+            //Debug.Log(" STOP - " + GameManager.Instance.MiniGameManager.currMiniGame.currentGesture.ToString());
             GameManager.Instance.GestureManager.StopDetecting();
+
+            //default result if no guesture recognized
             if (!GameManager.Instance.GestureManager.hasDetected)
             {
                 GestureEvaluationResult result = new GestureEvaluationResult(GameManager.Instance.MiniGameManager.currMiniGame.currentGesture, GestureEvaluationResult.GESTURE_PERFORMANCE.OK);
@@ -36,11 +26,12 @@ public class DanceHighlight : MonoBehaviour
             GameManager.Instance.MiniGameManager.currMiniGame.OnGameNextStep();
         }
 
-        Debug.Log("START - " + GameManager.Instance.MiniGameManager.currMiniGame.currentGesture.ToString());
+        //Debug.Log("START - " + GameManager.Instance.MiniGameManager.currMiniGame.currentGesture.ToString());
         GameManager.Instance.GestureManager.StartDetecting();
         isFirstMove = false;
     }
 
+    //load next guesture
     private void OnTriggerExit2D(Collider2D collider)
     {
         /*

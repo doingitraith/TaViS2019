@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Windows.Kinect;
 
+//was not stable enough, not used in game
 public class HamRightSegment1 : IRelativeGestureSegment
 {
     /// <summary>
@@ -26,7 +27,6 @@ public class HamRightSegment1 : IRelativeGestureSegment
             {
                 return GesturePartResult.Succeed;
             }
-            Debug.Log("Ham Right Segment 1 Pause");
             return GesturePartResult.Pausing;
         }
         return GesturePartResult.Fail;
@@ -56,7 +56,6 @@ public class HamRightSegment2 : IRelativeGestureSegment
             {
                 return GesturePartResult.Succeed;
             }
-            Debug.Log("Ham Right Segment 2 Pause");
             return GesturePartResult.Pausing;
         }
 

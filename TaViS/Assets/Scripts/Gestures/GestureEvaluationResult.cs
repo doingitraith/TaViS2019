@@ -9,6 +9,7 @@ public class GestureEvaluationResult
     public GESTURE_PERFORMANCE performance;
     public int score = 0;
 
+    //performance values and basic score corresponding to it
     public enum GESTURE_PERFORMANCE
     {
         NONE = 0,

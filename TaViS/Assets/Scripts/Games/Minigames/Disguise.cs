@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Windows.Kinect;
 
+//triggered between every game if suspiciousness too high
 public class Disguise : MonoBehaviour
 {
     private List<DetectionResult> glassesResults;
@@ -65,6 +66,7 @@ public class Disguise : MonoBehaviour
             int maybe = glassesResults.Count(d => d == DetectionResult.Maybe);
             int unknown = glassesResults.Count(d => d == DetectionResult.Unknown);
 
+            //get majority of results
             int max = new List<int> { yes, no/*, maybe, unknown*/ }.Max();
 
             if (GameManager.Instance.isWearingGlasses)

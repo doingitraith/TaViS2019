@@ -23,13 +23,10 @@ public class DiscoArmLeftSegment1 : IRelativeGestureSegment
             {
                 if (handLeft.x < spineShoulder.x) //x: rechts: positiv, links: negativ.
                 {
-                    Debug.Log("Disco Left Segment 1 Success");
                     return GesturePartResult.Succeed;
                 }
-                Debug.Log("Disco Left Segment 1 Pause");
                 return GesturePartResult.Pausing;
             }
-            Debug.Log("Disco Left Segment 1 Pause");
             return GesturePartResult.Pausing;
         }
         return GesturePartResult.Fail;
@@ -57,13 +54,10 @@ public class DiscoArmLeftSegment2 : IRelativeGestureSegment
             {
                 if (handLeft.x > spine.x) //x: rechts: negativ, links: positiv.
                 {
-                    Debug.Log("Disco Left Segment 2 Success");
                     return GesturePartResult.Succeed;
                 }
-                Debug.Log("Disco Left Segment 2 Pause");
                 return GesturePartResult.Pausing;
             }
-            Debug.Log("Disco Left Segment 2 Pause");
             return GesturePartResult.Pausing;
         }
         return GesturePartResult.Fail;
