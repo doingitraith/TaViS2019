@@ -2008,7 +2008,7 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 4e6c4eb5f4fdc8240a07712151b13f6e, type: 2}
     - target: {fileID: 9500000, guid: 40582351e6380cf44b6340249a3d49a2, type: 3}
       propertyPath: m_ApplyRootMotion
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400118, guid: 40582351e6380cf44b6340249a3d49a2, type: 3}
       propertyPath: m_LocalPosition.y
@@ -5500,7 +5500,7 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: ce955ff9790c78c4f910267ffd634789, type: 2}
     - target: {fileID: 9500000, guid: 40582351e6380cf44b6340249a3d49a2, type: 3}
       propertyPath: m_ApplyRootMotion
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40582351e6380cf44b6340249a3d49a2, type: 3}
@@ -7407,7 +7407,7 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: ce955ff9790c78c4f910267ffd634789, type: 2}
     - target: {fileID: 9500000, guid: 40582351e6380cf44b6340249a3d49a2, type: 3}
       propertyPath: m_ApplyRootMotion
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40582351e6380cf44b6340249a3d49a2, type: 3}
@@ -8673,7 +8673,7 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: ce955ff9790c78c4f910267ffd634789, type: 2}
     - target: {fileID: 9500000, guid: 40582351e6380cf44b6340249a3d49a2, type: 3}
       propertyPath: m_ApplyRootMotion
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40582351e6380cf44b6340249a3d49a2, type: 3}
@@ -9082,7 +9082,7 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 4e6c4eb5f4fdc8240a07712151b13f6e, type: 2}
     - target: {fileID: 9500000, guid: 40582351e6380cf44b6340249a3d49a2, type: 3}
       propertyPath: m_ApplyRootMotion
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400118, guid: 40582351e6380cf44b6340249a3d49a2, type: 3}
       propertyPath: m_LocalPosition.y
@@ -9976,7 +9976,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1485276602}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 8.88, y: 1.637, z: 4.26}
+  m_LocalPosition: {x: 8.444, y: 1.637, z: 4.26}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4293905678068152616}
@@ -10460,7 +10460,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1558259601}
   m_LocalRotation: {x: 0.008301919, y: -0.029925779, z: 0.0024797332, w: 0.9995146}
-  m_LocalPosition: {x: 0, y: 0, z: -0.33}
+  m_LocalPosition: {x: 0, y: 0, z: 0.798}
   m_LocalScale: {x: 1.1473107, y: 3.0582669, z: 0.19156712}
   m_Children: []
   m_Father: {fileID: 1984714775}
@@ -10468,7 +10468,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1.96, y: -3.88}
+  m_AnchoredPosition: {x: -0.061, y: -3.42}
   m_SizeDelta: {x: 2, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1558259603
@@ -10491,7 +10491,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: Trapdoor
+  m_text: Activate Trapdoor
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -10525,7 +10525,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_textAlignment: 258
   m_isAlignmentEnumConverted: 1
   m_characterSpacing: 0
@@ -10560,12 +10560,12 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 0}
-    characterCount: 8
+    characterCount: 17
     spriteCount: 0
-    spaceCount: 0
-    wordCount: 1
+    spaceCount: 1
+    wordCount: 2
     linkCount: 0
-    lineCount: 1
+    lineCount: 2
     pageCount: 1
     materialCount: 1
   m_havePropertiesChanged: 0
@@ -13876,7 +13876,7 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: 4e6c4eb5f4fdc8240a07712151b13f6e, type: 2}
     - target: {fileID: 9500000, guid: 40582351e6380cf44b6340249a3d49a2, type: 3}
       propertyPath: m_ApplyRootMotion
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 400118, guid: 40582351e6380cf44b6340249a3d49a2, type: 3}
       propertyPath: m_LocalPosition.y
