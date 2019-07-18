@@ -100,7 +100,7 @@ public class UI : MonoBehaviour
             feedBack.text = "";
             switch (gameId)
             {
-                case GameID.GAME_ID.START: feedBackText = "Welcome to PLACE agent, melting pot of dealers and gangsters of all kind.\nLogic, instinct and discretion are your most reknown qualities as we have been informed.\nYour target of this mission is on the stage.\nFollow your intuition and don't draw the guard's attention.\nJust blend in with the guests and follow my instructions. First you need to pass an ID check.\nGood luck in there agent."; break;
+                case GameID.GAME_ID.START: feedBackText = "Welcome to P.L.A.C.E. agent, melting pot of dealers and gangsters of all kind.\nLogic, instinct and discretion are your most reknown qualities as we have been informed.\nYour target of this mission is on the stage.\nFollow your intuition and don't draw the guard's attention.\nJust blend in with the guests and follow my instructions. First you need to pass an ID check.\nGood luck in there agent."; break;
                 case GameID.GAME_ID.TIP_HAT_DRINK: feedBackText = "We see you have taken the place of the bartender. Outstanding move!\nIt is customary to greet your guests before serving them.\nBut of course you know that.\nJust tip your hat."; break;
                 case GameID.GAME_ID.BALANCE_TABLET: feedBackText = "Refreshments are being served after the dance.\nDon't let the apples drop."; break;
                 case GameID.GAME_ID.END: feedBackText = "This is it agent. We never doubted your skills. Bravo!\nNow you can safely secure the target. Good job agent and thanks for your time."; break;
